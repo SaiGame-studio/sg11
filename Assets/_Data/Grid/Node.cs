@@ -11,8 +11,10 @@ public class Node
     public float posX = 0;
     public int weight = 1;
     public bool occupied = false;
+    public int nodeId;
     public Node up;
     public Node down;
     public Node left;
     public Node right;
+    public BlockCtrl blockCtrl;
 }

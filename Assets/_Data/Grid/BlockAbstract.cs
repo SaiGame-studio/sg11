@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class GridAbstract : SaiMonoBehaviour
+public class BlockAbstract : SaiMonoBehaviour
 {
-    [Header("Grid Abstract")]
-    public GridManagerCtrl ctrl;
+    [Header("Block Abstract")]
+    public BlockCtrl ctrl;
 
     protected override void LoadComponents()
     {
@@ -16,8 +16,7 @@ public abstract class GridAbstract : SaiMonoBehaviour
     protected virtual void LoadCtrl()
     {
         if (this.ctrl != null) return;
-        this.ctrl = transform.parent.GetComponent<GridManagerCtrl>();
-        Debug.LogWarning(transform.name + " LoadCtrl", gameObject);
+        this.ctrl = transform.parent.GetComponent<BlockCtrl>();
+        Debug.Log(transform.name + " LoadCtrl", gameObject);
     }
-
 }
