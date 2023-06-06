@@ -7,6 +7,7 @@ public class BlockCtrl : SaiMonoBehaviour
     [Header("Block Ctrl")]
     public SpriteRenderer sprite;
     public BlockData blockData;
+    public List<BlockCtrl> neighbors = new List<BlockCtrl>();
 
     protected override void LoadComponents()
     {
