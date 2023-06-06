@@ -29,6 +29,44 @@ public class GridSystem : GridAbstract
     protected override void Start()
     {
         this.SpawnBlocks();
+        this.FindNodesNeighbors();
+        this.FindBlocksNeighbors();
+    }
+
+    protected virtual void FindNodesNeighbors()
+    {
+        int x, y;
+        foreach (Node node in this.nodes)
+        {
+            x = node.x;
+            y = node.y;
+            node.up = this.GetNodeByXY(x, y + 1);
+            node.right = this.GetNodeByXY(x + 1, y);
+            node.down = this.GetNodeByXY(x, y - 1);
+            node.left = this.GetNodeByXY(x - 1, y);
+        }
+    }
+
+    protected virtual Node GetNodeByXY(int x, int y)
+    {
+        foreach (Node node in this.nodes)
+        {
+            if (node.x == x && node.y == y) return node;
+        }
+
+        return null;
+    }
+
+    protected virtual void FindBlocksNeighbors()
+    {
+        foreach (Node node in this.nodes)
+        {
+            if (node.blockCtrl == null) continue;
+            node.blockCtrl.neighbors.Add(node.up.blockCtrl);
+            node.blockCtrl.neighbors.Add(node.right.blockCtrl);
+            node.blockCtrl.neighbors.Add(node.down.blockCtrl);
+            node.blockCtrl.neighbors.Add(node.left.blockCtrl);
+        }
     }
 
     protected virtual void InitGridSystem()
@@ -89,6 +127,7 @@ public class GridSystem : GridAbstract
                 blockCtrl.blockData.SetSprite(sprite);
 
                 this.LinkNodeBlock(node, blockCtrl);
+                block.name = "Block_" + node.x.ToString() + "_" + node.y.ToString();
 
                 block.gameObject.SetActive(true);
             }
@@ -100,7 +139,7 @@ public class GridSystem : GridAbstract
         Node node;
         int randId;
         int nodeCount = this.nodes.Count;
-        for(int i = 0; i < nodeCount; i++)
+        for (int i = 0; i < nodeCount; i++)
         {
             randId = Random.Range(0, this.nodeIds.Count);
             node = this.nodes[this.nodeIds[randId]];
