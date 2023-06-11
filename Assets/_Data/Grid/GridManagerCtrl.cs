@@ -52,7 +52,6 @@ public class GridManagerCtrl : SaiMonoBehaviour
             return;
         }
 
-
         if (this.firstBlock == null)
         {
             this.firstBlock = blockCtrl;
