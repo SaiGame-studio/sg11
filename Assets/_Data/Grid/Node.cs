@@ -13,8 +13,21 @@ public class Node
     public bool occupied = false;
     public int nodeId;
     public Node up;
+    public Node right;
     public Node down;
     public Node left;
-    public Node right;
+    public NodeTransform nodeTranform;
     public BlockCtrl blockCtrl;
+
+    public virtual List<Node> Neighbors()
+    {
+        List<Node> nodes = new List<Node>
+        {
+            up,
+            right,
+            down,
+            left
+        };
+        return nodes;
+    }
 }
