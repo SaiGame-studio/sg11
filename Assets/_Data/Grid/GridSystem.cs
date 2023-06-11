@@ -108,8 +108,6 @@ public class GridSystem : GridAbstract
             blockHolder.gameObject.SetActive(true);
 
             blockObj.gameObject.SetActive(true);
-
-            node.occupied = true;
         }
     }
 
@@ -133,6 +131,8 @@ public class GridSystem : GridAbstract
                 block.name = "Block_" + node.x.ToString() + "_" + node.y.ToString();
 
                 block.gameObject.SetActive(true);
+
+                node.occupied = true;
             }
         }
     }

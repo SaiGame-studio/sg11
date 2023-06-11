@@ -32,7 +32,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
             {
                 if (neighbor == null) continue;
 
-                if (this.IsValidPosition(neighbor) && !cameFrom.ContainsKey(neighbor))
+                if (this.IsValidPosition(neighbor, targetNode) && !cameFrom.ContainsKey(neighbor))
                 {
                     this.Enqueue(neighbor);
                     this.cameFrom[neighbor] = current;
@@ -40,7 +40,19 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
             }
         }
 
+        this.ShowCameFrom();
         this.ShowPath();
+    }
+
+    protected virtual void ShowCameFrom()
+    {
+        foreach(var pair in this.cameFrom)
+        {
+            Node key = pair.Key;
+            Vector3 pos = key.nodeTranform.transform.position;
+            Transform keyObj = this.ctrl.blockSpawner.Spawn(BlockSpawner.SCAN, pos, Quaternion.identity);
+            keyObj.gameObject.SetActive(true);
+        }
     }
 
     protected virtual void ConstructPath(Node startNode, Node targetNode)
@@ -80,8 +92,10 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         return node;
     }
 
-    private bool IsValidPosition(Node node)
+    private bool IsValidPosition(Node node, Node startNode)
     {
+        if (node == startNode) return true;
+
         return !node.occupied;
     }
 }

@@ -19,7 +19,7 @@ public class BlockClickable : BlockAbstract
         if (this._collider != null) return;
         this._collider = GetComponent<BoxCollider>();
         this._collider.isTrigger = true;
-        this._collider.size = new Vector3(0.7f, 0.9f, 0.5f);
+        this._collider.size = new Vector3(0.79f, 0.99f, 0.5f);
         Debug.Log(transform.name + " LoadColider", gameObject);
     }
 
