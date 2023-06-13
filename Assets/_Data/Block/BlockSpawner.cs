@@ -12,7 +12,7 @@ public class BlockSpawner : Spawner
     public static string LINKER = "Linker";
     public static string CHOOSE = "Choose";
     public static string SCAN = "Scan";
-    public static string HOLDER = "BlockHolder";
+    public static string NODE_OBJ = "NodeObj";
 
     protected override void Awake()
     {

@@ -16,7 +16,7 @@ public class Node
     public Node right;
     public Node down;
     public Node left;
-    public NodeTransform nodeTranform;
+    public NodeObj nodeObj;
     public BlockCtrl blockCtrl;
 
     public virtual List<Node> Neighbors()

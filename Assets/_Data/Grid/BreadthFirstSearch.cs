@@ -49,7 +49,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         foreach(var pair in this.cameFrom)
         {
             Node key = pair.Key;
-            Vector3 pos = key.nodeTranform.transform.position;
+            Vector3 pos = key.nodeObj.transform.position;
             Transform keyObj = this.ctrl.blockSpawner.Spawn(BlockSpawner.SCAN, pos, Quaternion.identity);
             keyObj.gameObject.SetActive(true);
         }
@@ -74,7 +74,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         Vector3 pos;
         foreach(Node node in this.path)
         {
-            pos = node.nodeTranform.transform.position;
+            pos = node.nodeObj.transform.position;
             Transform linker = this.ctrl.blockSpawner.Spawn(BlockSpawner.LINKER, pos, Quaternion.identity);
             linker.gameObject.SetActive(true);
         }
