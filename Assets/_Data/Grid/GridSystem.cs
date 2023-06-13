@@ -8,7 +8,7 @@ public class GridSystem : GridAbstract
     public int width = 18;
     public int height = 11;
     private float offsetX = 0.2f;
-    public BlocksProfile blocksProfile;
+    public BlocksProfileSO blocksProfile;
     public List<Node> nodes;
     public List<int> nodeIds;
 
@@ -22,13 +22,13 @@ public class GridSystem : GridAbstract
     protected virtual void LoadBlockProflie()
     {
         if (this.blocksProfile != null) return;
-        this.blocksProfile = Resources.Load<BlocksProfile>("Pikachu");
+        this.blocksProfile = Resources.Load<BlocksProfileSO>("Pokemons");
         Debug.LogWarning(transform.name + " LoadBlockProflie", gameObject);
     }
 
     protected override void Start()
     {
-        this.SpawnHolders();
+        this.SpawnNodeObj();
         this.SpawnBlocks();
         this.FindNodesNeighbors();
         this.FindBlocksNeighbors();
@@ -93,7 +93,7 @@ public class GridSystem : GridAbstract
         }
     }
 
-    protected virtual void SpawnHolders()
+    protected virtual void SpawnNodeObj()
     {
         Vector3 pos = Vector3.zero;
         foreach (Node node in this.nodes)
@@ -101,15 +101,17 @@ public class GridSystem : GridAbstract
             pos.x = node.posX;
             pos.y = node.y;
 
-            Transform blockObj = this.ctrl.blockSpawner.Spawn(BlockSpawner.HOLDER, pos, Quaternion.identity);
-            NodeTransform blockHolder = blockObj.GetComponent<NodeTransform>();
-            node.nodeTranform = blockHolder;
-            blockObj.name = "Holder_" + node.x.ToString() + "_" + node.y.ToString();
-            blockHolder.gameObject.SetActive(true);
+            Transform obj = this.ctrl.blockSpawner.Spawn(BlockSpawner.NODE_OBJ, pos, Quaternion.identity);
+            obj.name = "Holder_" + node.x.ToString() + "_" + node.y.ToString();
+            obj.gameObject.SetActive(true);
 
-            blockObj.gameObject.SetActive(true);
+            NodeObj nodeObj = obj.GetComponent<NodeObj>();
+            nodeObj.SetText(node.y + "\n" + node.x);
+            Color color = node.y % 2 == 0 ? Color.red : Color.cyan;
+            nodeObj.SetColor(color);
+            nodeObj.gameObject.SetActive(true);
 
-            node.occupied = true;
+            node.nodeObj = nodeObj;
         }
     }
 
@@ -133,6 +135,8 @@ public class GridSystem : GridAbstract
                 block.name = "Block_" + node.x.ToString() + "_" + node.y.ToString();
 
                 block.gameObject.SetActive(true);
+
+                node.occupied = true;
             }
         }
     }

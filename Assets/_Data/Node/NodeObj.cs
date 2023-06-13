@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
-public class BlockData : BlockAbstract
+public class NodeObj : SaiMonoBehaviour
 {
-    [Header("BlockData")]
     public TextMeshPro text;
     public Color textColor = Color.red;
-    public Node node;
+    public BlockCtrl blockCtrl;
 
     protected override void LoadComponents()
     {
@@ -23,17 +22,9 @@ public class BlockData : BlockAbstract
         Debug.Log(transform.name + " LoadTextMeshPro", gameObject);
     }
 
-    public virtual void SetNode(Node node)
+    public virtual void SetText(string text)
     {
-        this.node = node;
-        //this.text.text = this.node.nodeId.ToString();
-        this.text.text = this.node.x.ToString() + "\n" + this.node.y.ToString();
-        this.SetColor(this.textColor);
-    }
-
-    public virtual void SetSprite(Sprite sprite)
-    {
-        this.ctrl.sprite.sprite = sprite;
+        this.text.text = text;
     }
 
     public virtual void SetColor(Color color)

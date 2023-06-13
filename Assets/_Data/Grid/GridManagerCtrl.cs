@@ -52,13 +52,20 @@ public class GridManagerCtrl : SaiMonoBehaviour
             return;
         }
 
+        Vector3 pos;
+        Transform chooseObj;
         if (this.firstBlock == null)
         {
             this.firstBlock = blockCtrl;
+            pos = blockCtrl.transform.position;
+            chooseObj = this.blockSpawner.Spawn(BlockSpawner.CHOOSE, pos, Quaternion.identity);
+            chooseObj.gameObject.SetActive(true);
             return;
         }
 
         this.lastBlock = blockCtrl;
+        pos = blockCtrl.transform.position;
+        chooseObj = this.blockSpawner.Spawn(BlockSpawner.CHOOSE, pos, Quaternion.identity);
+        chooseObj.gameObject.SetActive(true);
     }
-
 }
