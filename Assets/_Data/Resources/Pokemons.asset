@@ -9,9 +9,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01a353396c34e8a49bd481afa9791886, type: 3}
-  m_Name: Pikachu
-  m_EditorClassIdentifier: 
+  m_Script: {fileID: 11500000, guid: 8c73a2a0d3f917046963bce8ff3ff1ef, type: 3}
+  m_Name: Pokemons
+  m_EditorClassIdentifier: Assembly-CSharp::BlocksProfile
   sprites:
   - {fileID: 21300000, guid: ea67f8b3172ff044e84e223157fd7402, type: 3}
   - {fileID: 21300000, guid: 0521d6a98295aac41ada64df38c4591e, type: 3}

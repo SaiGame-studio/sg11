@@ -8,7 +8,7 @@ public class GridSystem : GridAbstract
     public int width = 18;
     public int height = 11;
     private float offsetX = 0.2f;
-    public BlocksProfile blocksProfile;
+    public BlocksProfileSO blocksProfile;
     public List<Node> nodes;
     public List<int> nodeIds;
 
@@ -22,7 +22,7 @@ public class GridSystem : GridAbstract
     protected virtual void LoadBlockProflie()
     {
         if (this.blocksProfile != null) return;
-        this.blocksProfile = Resources.Load<BlocksProfile>("Pikachu");
+        this.blocksProfile = Resources.Load<BlocksProfileSO>("Pokemons");
         Debug.LogWarning(transform.name + " LoadBlockProflie", gameObject);
     }
 

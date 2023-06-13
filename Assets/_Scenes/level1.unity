@@ -568,7 +568,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 575290080}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b91e14a62a0f4cf43b4a47dbef4fc5b7, type: 3}
+  m_Script: {fileID: 11500000, guid: 0177b00bb98c973459d431acf80576d0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 1693281189}
@@ -851,7 +851,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 964586251}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 528c87cbae8f30245a1f18f680d93771, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e57b04d8b83a954e99aa41f4b6707c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   holder: {fileID: 2050258872}
@@ -1037,7 +1037,6 @@ Transform:
   - {fileID: 1619264325}
   - {fileID: 964586253}
   - {fileID: 950010296}
-  - {fileID: 1989575195}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1102,7 +1101,7 @@ MonoBehaviour:
   ctrl: {fileID: 1567163674}
   width: 18
   height: 11
-  blocksProfile: {fileID: 11400000, guid: 47cf999d189850746b560c498b5b1c42, type: 2}
+  blocksProfile: {fileID: 11400000, guid: 35be44d3068bed8409f7cae9e73ea18e, type: 2}
   nodes:
   - x: 0
     y: 0
@@ -2982,7 +2981,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1917153931}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d796403d6e8a7ee448c07144355e1304, type: 3}
+  m_Script: {fileID: 11500000, guid: 9a8c417279088bf4fa425849b9d6eecd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ctrl: {fileID: 575290082}
@@ -3000,36 +2999,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 0.9, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!1 &1989575194
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1989575195}
-  m_Layer: 0
-  m_Name: 'APathfinding '
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1989575195
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1989575194}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 1567163673}
-  m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2041649237
 GameObject:
   m_ObjectHideFlags: 0
@@ -3302,7 +3271,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2117755380}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 665c4ad6ac3252846b3d76954528623d, type: 3}
+  m_Script: {fileID: 11500000, guid: c548e1cbc5f104b44821060595e82c2c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   ctrl: {fileID: 575290082}
