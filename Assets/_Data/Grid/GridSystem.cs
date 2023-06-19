@@ -107,7 +107,7 @@ public class GridSystem : GridAbstract
 
             NodeObj nodeObj = obj.GetComponent<NodeObj>();
             nodeObj.SetText(node.y + "\n" + node.x);
-            Color color = node.y % 2 == 0 ? Color.red : Color.cyan;
+            Color color = node.y % 2 == 0 ? Color.red : Color.blue;
             nodeObj.SetColor(color);
             nodeObj.gameObject.SetActive(true);
 
