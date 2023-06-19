@@ -7,13 +7,26 @@ using UnityEngine;
 public class NodeCameFrom
 {
     public string nodeId;
-    public Node node;
-    public Node cameFromNode;
+    public NodeDirections direction = NodeDirections.noDirection;
+    public Node fromNode;
+    public Node toNode;
 
-    public NodeCameFrom(Node node, Node cameFromNode)
+    public NodeCameFrom(Node fromNode, Node toNode)
     {
-        this.nodeId = node.x + "x" + node.y;
-        this.node = node;
-        this.cameFromNode = cameFromNode;
+        this.nodeId = fromNode.x + "x" + fromNode.y;
+        this.toNode = fromNode;
+        this.fromNode = toNode;
+        this.direction = this.GetDirection(fromNode,toNode);
+    }
+
+    protected virtual NodeDirections GetDirection(Node fromNode, Node toNode)
+    {
+        if (fromNode.x == toNode.x && fromNode.y < toNode.y) return NodeDirections.down;
+        if (fromNode.x == toNode.x && fromNode.y > toNode.y) return NodeDirections.up;
+
+        if (fromNode.x < toNode.x && fromNode.y == toNode.y) return NodeDirections.left;
+        if (fromNode.x > toNode.x && fromNode.y == toNode.y) return NodeDirections.right;
+
+        return NodeDirections.noDirection;
     }
 }
