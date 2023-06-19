@@ -26,20 +26,19 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
             if (current == targetNode)
             {
-                ConstructPath(startNode, targetNode);
+                this.path = BuildNodePath(startNode, targetNode);
                 break;
             }
 
             foreach (Node neighbor in current.Neighbors())
             {
                 if (neighbor == null) continue;
+                if (this.visited.Contains(neighbor)) continue;
+                if (!this.IsValidPosition(neighbor, targetNode)) continue;
 
-                if (this.IsValidPosition(neighbor, targetNode) && !this.visited.Contains(neighbor))
-                {
-                    this.Enqueue(neighbor);
-                    this.visited.Add(neighbor);
-                    this.cameFromNodes.Add(new NodeCameFrom(neighbor, current));
-                }
+                this.Enqueue(neighbor);
+                this.visited.Add(neighbor);
+                this.cameFromNodes.Add(new NodeCameFrom(neighbor, current));
             }
         }
 
@@ -49,7 +48,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
     protected virtual void ShowVisited()
     {
-        foreach(Node node in this.visited)
+        foreach (Node node in this.visited)
         {
             Vector3 pos = node.nodeObj.transform.position;
             Transform keyObj = this.ctrl.blockSpawner.Spawn(BlockSpawner.SCAN, pos, Quaternion.identity);
@@ -57,8 +56,9 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         }
     }
 
-    protected virtual void ConstructPath(Node startNode, Node targetNode)
+    protected virtual List<Node> BuildNodePath(Node startNode, Node targetNode)
     {
+        List<Node> path = new List<Node>();
         Node currentCell = targetNode;
 
         while (currentCell != startNode)
@@ -69,17 +69,24 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
         path.Add(startNode);
         path.Reverse();
+
+        return path;
     }
 
     protected virtual Node GetCameFrom(Node node)
     {
-        return this.cameFromNodes.Find(item => item.toNode == node).fromNode;
+        return this.GetNodeCameFrom(node).fromNode;
+    }
+
+    protected virtual NodeCameFrom GetNodeCameFrom(Node node)
+    {
+        return this.cameFromNodes.Find(item => item.toNode == node);
     }
 
     protected virtual void ShowPath()
     {
         Vector3 pos;
-        foreach(Node node in this.path)
+        foreach (Node node in this.path)
         {
             pos = node.nodeObj.transform.position;
             Transform linker = this.ctrl.blockSpawner.Spawn(BlockSpawner.LINKER, pos, Quaternion.identity);
