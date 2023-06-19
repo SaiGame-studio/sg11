@@ -4,14 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [Serializable]
-public class NodeCameFrom
+public class NodeStep
 {
     public string nodeId;
     public NodeDirections direction = NodeDirections.noDirection;
     public Node fromNode;
     public Node toNode;
 
-    public NodeCameFrom(Node fromNode, Node toNode)
+    public NodeStep(Node fromNode, Node toNode)
     {
         this.nodeId = fromNode.x + "x" + fromNode.y;
         this.toNode = fromNode;

@@ -7,7 +7,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
     [Header("Breadth First Search")]
     public List<Node> queue = new List<Node>();
     public List<Node> path = new List<Node>();
-    public List<NodeCameFrom> cameFromNodes = new List<NodeCameFrom>();
+    public List<NodeStep> cameFromNodes = new List<NodeStep>();
     public List<Node> visited = new List<Node>();
 
     public virtual void FindPath(BlockCtrl startBlock, BlockCtrl targetBlock)
@@ -17,7 +17,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         Node targetNode = targetBlock.blockData.node;
 
         this.Enqueue(startNode);
-        this.cameFromNodes.Add(new NodeCameFrom(startNode, startNode));
+        this.cameFromNodes.Add(new NodeStep(startNode, startNode));
         this.visited.Add(startNode);
 
         while (this.queue.Count > 0)
@@ -38,7 +38,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
                 this.Enqueue(neighbor);
                 this.visited.Add(neighbor);
-                this.cameFromNodes.Add(new NodeCameFrom(neighbor, current));
+                this.cameFromNodes.Add(new NodeStep(neighbor, current));
             }
         }
 
@@ -59,12 +59,12 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
     protected virtual List<Node> BuildNodePath(Node startNode, Node targetNode)
     {
         List<Node> path = new List<Node>();
-        Node currentCell = targetNode;
+        Node toNode = targetNode;
 
-        while (currentCell != startNode)
+        while (toNode != startNode)
         {
-            path.Add(currentCell);
-            currentCell = this.GetCameFrom(currentCell);
+            path.Add(toNode);
+            toNode = this.GetFromNode(toNode);
         }
 
         path.Add(startNode);
@@ -73,14 +73,14 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         return path;
     }
 
-    protected virtual Node GetCameFrom(Node node)
+    protected virtual Node GetFromNode(Node toNode)
     {
-        return this.GetNodeCameFrom(node).fromNode;
+        return this.GetNodeStepByToNode(toNode).fromNode;
     }
 
-    protected virtual NodeCameFrom GetNodeCameFrom(Node node)
+    protected virtual NodeStep GetNodeStepByToNode(Node toNode)
     {
-        return this.cameFromNodes.Find(item => item.toNode == node);
+        return this.cameFromNodes.Find(item => item.toNode == toNode);
     }
 
     protected virtual void ShowPath()
