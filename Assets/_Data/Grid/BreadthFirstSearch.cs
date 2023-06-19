@@ -26,7 +26,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
             if (current == targetNode)
             {
-                this.path = BuildNodePath(startNode, targetNode);
+                this.path = BuildFinalPath(startNode, targetNode);
                 break;
             }
 
@@ -56,7 +56,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         }
     }
 
-    protected virtual List<Node> BuildNodePath(Node startNode, Node targetNode)
+    protected virtual List<Node> BuildFinalPath(Node startNode, Node targetNode)
     {
         List<Node> path = new List<Node>();
         Node toNode = targetNode;
@@ -111,5 +111,33 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         if (node == startNode) return true;
 
         return !node.occupied;
+    }
+
+    protected virtual int CountDirectionFrom2Nodes(Node currentNode, Node startNode)
+    {
+        int count = 0;
+        List<NodeStep> steps = this.BuildNodeStepPath(currentNode, startNode);
+        count = this.CountDirectionFromSteps(steps);
+        return count;
+    }
+
+    protected virtual int CountDirectionFromSteps(List<NodeStep> steps)
+    {
+        NodeDirections nodeDirection;
+        List<NodeDirections> directions = new List<NodeDirections>();
+        foreach(NodeStep nodeStep in steps)
+        {
+            nodeDirection = nodeStep.direction;
+            if (directions.Contains(nodeDirection)) continue;
+            directions.Add(nodeDirection);
+        }
+        return directions.Count;
+    }
+
+    protected virtual List<NodeStep> BuildNodeStepPath(Node currentNode, Node startNode)
+    {
+        List<NodeStep> path = new List<NodeStep>();
+
+        return path;
     }
 }
