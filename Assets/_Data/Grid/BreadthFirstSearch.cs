@@ -6,7 +6,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 {
     [Header("Breadth First Search")]
     public List<Node> queue = new List<Node>();
-    public List<Node> path = new List<Node>();
+    public List<Node> finalPath = new List<Node>();
     public List<NodeStep> cameFromNodes = new List<NodeStep>();
     public List<Node> visited = new List<Node>();
 
@@ -20,13 +20,15 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         this.cameFromNodes.Add(new NodeStep(startNode, startNode));
         this.visited.Add(startNode);
 
+        NodeStep nodeStep;
+        List<NodeStep> steps;
         while (this.queue.Count > 0)
         {
             Node current = this.Dequeue();
 
             if (current == targetNode)
             {
-                this.path = BuildFinalPath(startNode, targetNode);
+                this.finalPath = this.BuildFinalPath(startNode, targetNode);
                 break;
             }
 
@@ -36,10 +38,19 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
                 if (this.visited.Contains(neighbor)) continue;
                 if (!this.IsValidPosition(neighbor, targetNode)) continue;
 
-                this.Enqueue(neighbor);
+                nodeStep = new NodeStep(neighbor, current);
+                this.cameFromNodes.Add(nodeStep);
                 this.visited.Add(neighbor);
-                this.cameFromNodes.Add(new NodeStep(neighbor, current));
+
+                steps = this.BuildNodeStepPath(neighbor, startNode);
+                nodeStep.stepsString = this.GetStringFromSteps(steps);
+                nodeStep.directionString = this.GetDirectionsFromSteps(steps);
+                nodeStep.changeDirectionCount = this.CountDirectionFrom2Nodes(neighbor, startNode);
+                if (nodeStep.changeDirectionCount > 3) continue;
+
+                this.Enqueue(neighbor);
             }
+
         }
 
         this.ShowVisited();
@@ -86,7 +97,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
     protected virtual void ShowPath()
     {
         Vector3 pos;
-        foreach (Node node in this.path)
+        foreach (Node node in this.finalPath)
         {
             pos = node.nodeObj.transform.position;
             Transform linker = this.ctrl.blockSpawner.Spawn(BlockSpawner.LINKER, pos, Quaternion.identity);
@@ -113,6 +124,26 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         return !node.occupied;
     }
 
+    protected virtual string GetStringFromSteps(List<NodeStep> steps)
+    {
+        string stepsString = "";
+        foreach (NodeStep nodeStep in steps)
+        {
+            stepsString += nodeStep.toNode.Name()+"=>";
+        }
+        return stepsString;
+    }
+
+    protected virtual string GetDirectionsFromSteps(List<NodeStep> steps)
+    {
+        string stepsString = "";
+        foreach (NodeStep nodeStep in steps)
+        {
+            stepsString += nodeStep.direction + "=>";
+        }
+        return stepsString;
+    }
+
     protected virtual int CountDirectionFrom2Nodes(Node currentNode, Node startNode)
     {
         int count = 0;
@@ -125,7 +156,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
     {
         NodeDirections nodeDirection;
         List<NodeDirections> directions = new List<NodeDirections>();
-        foreach(NodeStep nodeStep in steps)
+        foreach (NodeStep nodeStep in steps)
         {
             nodeDirection = nodeStep.direction;
             if (directions.Contains(nodeDirection)) continue;
@@ -136,8 +167,40 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
     protected virtual List<NodeStep> BuildNodeStepPath(Node currentNode, Node startNode)
     {
-        List<NodeStep> path = new List<NodeStep>();
+        List<NodeStep> steps = new List<NodeStep>();
 
-        return path;
+        Node checkNode = currentNode;
+        for (int i = 0; i < this.cameFromNodes.Count; i++)
+        {
+            NodeStep step = this.GetNodeStepByToNode(checkNode);
+            steps.Add(step);
+            checkNode = step.fromNode;
+            if (step.fromNode == startNode) break;
+        }
+
+        this.ShowScanStep(currentNode);
+        //Debug.Log("currentNode: " + currentNode.Name());
+        //this.ShowStepsDebug(steps);
+        return steps;
+    }
+
+    protected virtual void ShowStepsDebug(List<NodeStep> steps)
+    {
+        Debug.LogError("Steps Count: " + steps.Count);
+
+        foreach (NodeStep step in steps)
+        {
+            Debug.Log("stepsDebug: " + step.toNode.Name());
+        }
+        Debug.LogError("=========================");
+    }
+
+
+
+    protected virtual void ShowScanStep(Node currentNode)
+    {
+        Vector3 pos = currentNode.nodeObj.transform.position;
+        Transform obj = BlockSpawner.Instance.Spawn(BlockSpawner.SCAN_STEP, pos, Quaternion.identity);
+        obj.gameObject.SetActive(true);
     }
 }
