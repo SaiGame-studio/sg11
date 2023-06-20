@@ -7,6 +7,9 @@ using UnityEngine;
 public class NodeStep
 {
     public string nodeId;
+    public string stepsString = "";
+    public string directionString = "";
+    public int changeDirectionCount = 0;
     public NodeDirections direction = NodeDirections.noDirection;
     public Node fromNode;
     public Node toNode;
