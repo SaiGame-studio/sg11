@@ -26,9 +26,11 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
             if (current == targetNode)
             {
-                this.path = BuildFinalPath(startNode, targetNode);
+                this.path = this.BuildFinalPath(startNode, targetNode);
                 break;
             }
+
+            if (this.CountDirectionFrom2Nodes(current, startNode) > 3) continue;
 
             foreach (Node neighbor in current.Neighbors())
             {
@@ -138,6 +140,18 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
     {
         List<NodeStep> path = new List<NodeStep>();
 
+        //NodeStep nodeStep = this.path.fi
+
+        this.ShowScanStep(currentNode);
+        Debug.Log("currentNode: " + currentNode.Name());
         return path;
+    }
+
+
+    protected virtual void ShowScanStep(Node currentNode)
+    {
+        Vector3 pos = currentNode.nodeObj.transform.position;
+        Transform obj= BlockSpawner.Instance.Spawn(BlockSpawner.SCAN_STEP, pos, Quaternion.identity);
+        obj.gameObject.SetActive(true);
     }
 }

@@ -30,4 +30,9 @@ public class Node
         };
         return nodes;
     }
+
+    public virtual string Name()
+    {
+        return this.x + "x" + this.y;
+    }
 }
