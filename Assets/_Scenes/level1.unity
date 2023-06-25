@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4120212
 RectTransform:
   m_ObjectHideFlags: 0
@@ -402,6 +402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sprite: {fileID: 1693281189}
+  blockID: '#'
   blockData: {fileID: 2117755382}
   neighbors: []
 --- !u!1 &628695049
@@ -655,7 +656,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ctrl: {fileID: 1567163674}
   queue: []
-  path: []
+  finalPath: []
   cameFromNodes: []
   visited: []
 --- !u!1 &964586251
@@ -905,6 +906,7 @@ Transform:
   - {fileID: 1619264325}
   - {fileID: 964586253}
   - {fileID: 950010296}
+  - {fileID: 1777459314}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -921,8 +923,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   blockSpawner: {fileID: 964586252}
-  firstBlock: {fileID: 0}
-  lastBlock: {fileID: 0}
+  blockHandler: {fileID: 1777459315}
+  gridSystem: {fileID: 0}
 --- !u!1 &1619264324
 GameObject:
   m_ObjectHideFlags: 0
@@ -976,6 +978,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 0
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -984,6 +987,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 1
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -992,6 +996,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 2
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1000,6 +1005,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 3
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1008,6 +1014,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 4
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1016,6 +1023,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 5
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1024,6 +1032,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 6
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1032,6 +1041,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 7
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1040,6 +1050,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 8
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1048,6 +1059,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 9
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1056,6 +1068,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 10
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1064,6 +1077,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 11
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1072,6 +1086,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 12
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1080,6 +1095,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 13
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1088,6 +1104,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 14
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1096,6 +1113,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 15
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1104,6 +1122,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 16
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1112,6 +1131,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 17
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1120,6 +1140,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 18
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1128,6 +1149,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 19
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1136,6 +1158,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 20
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1144,6 +1167,7 @@ MonoBehaviour:
     posX: 0.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 21
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1152,6 +1176,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 22
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1160,6 +1185,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 23
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1168,6 +1194,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 24
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1176,6 +1203,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 25
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1184,6 +1212,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 26
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1192,6 +1221,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 27
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1200,6 +1230,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 28
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1208,6 +1239,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 29
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1216,6 +1248,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 30
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1224,6 +1257,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 31
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1232,6 +1266,7 @@ MonoBehaviour:
     posX: 1.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 32
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1240,6 +1275,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 33
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1248,6 +1284,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 34
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1256,6 +1293,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 35
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1264,6 +1302,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 36
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1272,6 +1311,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 37
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1280,6 +1320,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 38
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1288,6 +1329,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 39
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1296,6 +1338,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 40
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1304,6 +1347,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 41
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1312,6 +1356,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 42
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1320,6 +1365,7 @@ MonoBehaviour:
     posX: 2.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 43
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1328,6 +1374,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 44
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1336,6 +1383,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 45
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1344,6 +1392,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 46
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1352,6 +1401,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 47
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1360,6 +1410,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 48
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1368,6 +1419,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 49
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1376,6 +1428,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 50
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1384,6 +1437,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 51
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1392,6 +1446,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 52
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1400,6 +1455,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 53
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1408,6 +1464,7 @@ MonoBehaviour:
     posX: 3.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 54
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1416,6 +1473,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 55
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1424,6 +1482,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 56
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1432,6 +1491,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 57
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1440,6 +1500,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 58
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1448,6 +1509,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 59
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1456,6 +1518,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 60
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1464,6 +1527,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 61
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1472,6 +1536,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 62
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1480,6 +1545,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 63
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1488,6 +1554,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 64
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1496,6 +1563,7 @@ MonoBehaviour:
     posX: 4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 65
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1504,6 +1572,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 66
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1512,6 +1581,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 67
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1520,6 +1590,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 68
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1528,6 +1599,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 69
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1536,6 +1608,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 70
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1544,6 +1617,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 71
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1552,6 +1626,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 72
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1560,6 +1635,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 73
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1568,6 +1644,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 74
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1576,6 +1653,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 75
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1584,6 +1662,7 @@ MonoBehaviour:
     posX: 4.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 76
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1592,6 +1671,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 77
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1600,6 +1680,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 78
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1608,6 +1689,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 79
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1616,6 +1698,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 80
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1624,6 +1707,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 81
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1632,6 +1716,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 82
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1640,6 +1725,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 83
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1648,6 +1734,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 84
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1656,6 +1743,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 85
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1664,6 +1752,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 86
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1672,6 +1761,7 @@ MonoBehaviour:
     posX: 5.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 87
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1680,6 +1770,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 88
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1688,6 +1779,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 89
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1696,6 +1788,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 90
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1704,6 +1797,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 91
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1712,6 +1806,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 92
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1720,6 +1815,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 93
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1728,6 +1824,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 94
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1736,6 +1833,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 95
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1744,6 +1842,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 96
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1752,6 +1851,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 97
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1760,6 +1860,7 @@ MonoBehaviour:
     posX: 6.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 98
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1768,6 +1869,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 99
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1776,6 +1878,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 100
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1784,6 +1887,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 101
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1792,6 +1896,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 102
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1800,6 +1905,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 103
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1808,6 +1914,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 104
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1816,6 +1923,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 105
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1824,6 +1932,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 106
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1832,6 +1941,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 107
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1840,6 +1950,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 108
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1848,6 +1959,7 @@ MonoBehaviour:
     posX: 7.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 109
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1856,6 +1968,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 110
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1864,6 +1977,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 111
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1872,6 +1986,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 112
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1880,6 +1995,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 113
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1888,6 +2004,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 114
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1896,6 +2013,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 115
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1904,6 +2022,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 116
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1912,6 +2031,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 117
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1920,6 +2040,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 118
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1928,6 +2049,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 119
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1936,6 +2058,7 @@ MonoBehaviour:
     posX: 8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 120
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1944,6 +2067,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 121
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1952,6 +2076,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 122
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1960,6 +2085,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 123
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1968,6 +2094,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 124
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1976,6 +2103,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 125
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1984,6 +2112,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 126
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -1992,6 +2121,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 127
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2000,6 +2130,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 128
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2008,6 +2139,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 129
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2016,6 +2148,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 130
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2024,6 +2157,7 @@ MonoBehaviour:
     posX: 8.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 131
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2032,6 +2166,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 132
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2040,6 +2175,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 133
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2048,6 +2184,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 134
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2056,6 +2193,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 135
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2064,6 +2202,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 136
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2072,6 +2211,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 137
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2080,6 +2220,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 138
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2088,6 +2229,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 139
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2096,6 +2238,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 140
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2104,6 +2247,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 141
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2112,6 +2256,7 @@ MonoBehaviour:
     posX: 9.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 142
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2120,6 +2265,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 143
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2128,6 +2274,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 144
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2136,6 +2283,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 145
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2144,6 +2292,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 146
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2152,6 +2301,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 147
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2160,6 +2310,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 148
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2168,6 +2319,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 149
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2176,6 +2328,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 150
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2184,6 +2337,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 151
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2192,6 +2346,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 152
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2200,6 +2355,7 @@ MonoBehaviour:
     posX: 10.4
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 153
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2208,6 +2364,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 154
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2216,6 +2373,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 155
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2224,6 +2382,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 156
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2232,6 +2391,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 157
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2240,6 +2400,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 158
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2248,6 +2409,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 159
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2256,6 +2418,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 160
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2264,6 +2427,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 161
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2272,6 +2436,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 162
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2280,6 +2445,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 163
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2288,6 +2454,7 @@ MonoBehaviour:
     posX: 11.2
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 164
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2296,6 +2463,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 165
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2304,6 +2472,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 166
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2312,6 +2481,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 167
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2320,6 +2490,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 168
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2328,6 +2499,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 169
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2336,6 +2508,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 170
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2344,6 +2517,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 171
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2352,6 +2526,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 172
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2360,6 +2535,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 173
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2368,6 +2544,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 174
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2376,6 +2553,7 @@ MonoBehaviour:
     posX: 12
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 175
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2384,6 +2562,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 176
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2392,6 +2571,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 177
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2400,6 +2580,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 178
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2408,6 +2589,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 179
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2416,6 +2598,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 180
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2424,6 +2607,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 181
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2432,6 +2616,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 182
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2440,6 +2625,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 183
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2448,6 +2634,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 184
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2456,6 +2643,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 185
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2464,6 +2652,7 @@ MonoBehaviour:
     posX: 12.8
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 186
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2472,6 +2661,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 187
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2480,6 +2670,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 188
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2488,6 +2679,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 189
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2496,6 +2688,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 190
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2504,6 +2697,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 191
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2512,6 +2706,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 192
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2520,6 +2715,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 193
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2528,6 +2724,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 194
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2536,6 +2733,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 195
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2544,6 +2742,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 196
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2552,6 +2751,7 @@ MonoBehaviour:
     posX: 13.6
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 197
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}
@@ -2655,7 +2855,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1710150349
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2825,7 +3025,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1749708122
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2978,6 +3178,52 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &1777459313
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1777459314}
+  - component: {fileID: 1777459315}
+  m_Layer: 0
+  m_Name: BlockHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1777459314
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777459313}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 1567163673}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1777459315
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1777459313}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 968ade74e9601fd4e9ce4b09fb456058, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ctrl: {fileID: 1567163674}
+  firstBlock: {fileID: 0}
+  lastBlock: {fileID: 0}
 --- !u!1 &1917153931
 GameObject:
   m_ObjectHideFlags: 0
@@ -3115,7 +3361,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2088007657
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3318,6 +3564,7 @@ MonoBehaviour:
     posX: 0
     weight: 1
     occupied: 0
+    blockPlaced: 0
     nodeId: 0
     nodeObj: {fileID: 0}
     blockCtrl: {fileID: 0}

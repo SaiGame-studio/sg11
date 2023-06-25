@@ -9,9 +9,9 @@ public class GridManagerCtrl : SaiMonoBehaviour
     public static GridManagerCtrl Instance => instance;
 
     public BlockSpawner blockSpawner;
+    public BlockHandler blockHandler;
+    public GridSystem gridSystem;
     public IPathfinding pathfinding;
-    public BlockCtrl firstBlock;
-    public BlockCtrl lastBlock;
 
     protected override void Awake()
     {
@@ -25,6 +25,8 @@ public class GridManagerCtrl : SaiMonoBehaviour
         base.LoadComponents();
         this.LoadSpawner();
         this.LoadPathfinding();
+        this.LoadBlockHandler();
+        this.LoadGridSystem();
     }
 
     protected virtual void LoadSpawner()
@@ -34,38 +36,24 @@ public class GridManagerCtrl : SaiMonoBehaviour
         Debug.Log(transform.name + " LoadSpawner", gameObject);
     }
 
+    protected virtual void LoadBlockHandler()
+    {
+        if (this.blockHandler != null) return;
+        this.blockHandler = transform.Find("BlockHandler").GetComponent<BlockHandler>();
+        Debug.Log(transform.name + " LoadBlockHandler", gameObject);
+    }
+
+    protected virtual void LoadGridSystem()
+    {
+        if (this.gridSystem != null) return;
+        this.gridSystem = transform.Find("GridSystem").GetComponent<GridSystem>();
+        Debug.Log(transform.name + " LoadGridSystem", gameObject);
+    }
+
     protected virtual void LoadPathfinding()
     {
         if (this.pathfinding != null) return;
         this.pathfinding = transform.GetComponentInChildren<IPathfinding>();
         Debug.Log(transform.name + " LoadPathfinding", gameObject);
-    }
-
-    public virtual void SetNode(BlockCtrl blockCtrl)
-    {
-        if(this.firstBlock != null && this.lastBlock != null)
-        {
-            this.pathfinding.FindPath(this.firstBlock, this.lastBlock);
-            this.firstBlock = null;
-            this.lastBlock = null;
-            Debug.Log("Reset blocks");
-            return;
-        }
-
-        Vector3 pos;
-        Transform chooseObj;
-        if (this.firstBlock == null)
-        {
-            this.firstBlock = blockCtrl;
-            pos = blockCtrl.transform.position;
-            chooseObj = this.blockSpawner.Spawn(BlockSpawner.CHOOSE, pos, Quaternion.identity);
-            chooseObj.gameObject.SetActive(true);
-            return;
-        }
-
-        this.lastBlock = blockCtrl;
-        pos = blockCtrl.transform.position;
-        chooseObj = this.blockSpawner.Spawn(BlockSpawner.CHOOSE, pos, Quaternion.identity);
-        chooseObj.gameObject.SetActive(true);
     }
 }

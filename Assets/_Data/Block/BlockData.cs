@@ -16,7 +16,6 @@ public class BlockData : BlockAbstract
     public virtual void SetSprite(Sprite sprite)
     {
         this.ctrl.sprite.sprite = sprite;
+        this.ctrl.blockID = sprite.name;
     }
-
-
 }
