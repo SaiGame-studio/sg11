@@ -10,9 +10,17 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
     public List<NodeStep> cameFromNodes = new List<NodeStep>();
     public List<Node> visited = new List<Node>();
 
-    public virtual void FindPath(BlockCtrl startBlock, BlockCtrl targetBlock)
+    public virtual void DataReset()
     {
-        Debug.Log("FindPath");
+        this.queue = new List<Node>();
+        this.finalPath = new List<Node>();
+        this.cameFromNodes = new List<NodeStep>();
+        this.visited = new List<Node>();
+    }
+
+    public virtual bool FindPath(BlockCtrl startBlock, BlockCtrl targetBlock)
+    {
+        //Debug.Log("FindPath");
         Node startNode = startBlock.blockData.node;
         Node targetNode = targetBlock.blockData.node;
 
@@ -55,6 +63,15 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
         this.ShowVisited();
         this.ShowPath();
+
+        return this.IsPathFound();
+    }
+
+    protected virtual bool IsPathFound()
+    {
+        int nodeCount = this.finalPath.Count;
+        //Debug.Log("nodeCount: " + nodeCount);
+        return nodeCount > 0;
     }
 
     protected virtual void ShowVisited()
@@ -129,7 +146,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         string stepsString = "";
         foreach (NodeStep nodeStep in steps)
         {
-            stepsString += nodeStep.toNode.Name()+"=>";
+            stepsString += nodeStep.toNode.Name() + "=>";
         }
         return stepsString;
     }
@@ -179,8 +196,6 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         }
 
         this.ShowScanStep(currentNode);
-        //Debug.Log("currentNode: " + currentNode.Name());
-        //this.ShowStepsDebug(steps);
         return steps;
     }
 
@@ -194,8 +209,6 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         }
         Debug.LogError("=========================");
     }
-
-
 
     protected virtual void ShowScanStep(Node currentNode)
     {

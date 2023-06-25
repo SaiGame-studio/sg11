@@ -136,9 +136,21 @@ public class GridSystem : GridAbstract
 
                 block.gameObject.SetActive(true);
 
-                node.occupied = true;
+                this.NodeOccupied(node);
             }
         }
+    }
+
+    public virtual void NodeOccupied(Node node)
+    {
+        node.occupied = true;
+        node.blockPlaced = true;
+    }
+
+    public virtual void NodeFree(Node node)
+    {
+        node.occupied = false;
+        node.blockCtrl.sprite.sprite = null;
     }
 
     protected virtual Node GetRandomNode()
