@@ -26,7 +26,8 @@ public class BlockHandler : GridAbstract
         chooseObj = this.ctrl.blockSpawner.Spawn(BlockSpawner.CHOOSE, pos, Quaternion.identity);
         chooseObj.gameObject.SetActive(true);
 
-        if(this.firstBlock.blockID == this.lastBlock.blockID)
+        if (this.firstBlock != this.lastBlock
+            && this.firstBlock.blockID == this.lastBlock.blockID)
         {
             bool isPathFound = this.ctrl.pathfinding.FindPath(this.firstBlock, this.lastBlock);
             if (isPathFound) this.FreeBlocks();
@@ -34,7 +35,7 @@ public class BlockHandler : GridAbstract
 
         this.firstBlock = null;
         this.lastBlock = null;
-        this.ctrl.pathfinding.DataReset();
+        //this.ctrl.pathfinding.DataReset();
     }
 
     protected virtual void FreeBlocks()

@@ -11,6 +11,7 @@ public class GridSystem : GridAbstract
     public BlocksProfileSO blocksProfile;
     public List<Node> nodes;
     public List<int> nodeIds;
+    public List<Node> freeNodes = new List<Node>();
 
     protected override void LoadComponents()
     {
@@ -149,8 +150,9 @@ public class GridSystem : GridAbstract
 
     public virtual void NodeFree(Node node)
     {
+        this.freeNodes.Add(node);
         node.occupied = false;
-        node.blockCtrl.sprite.sprite = null;
+        node.blockCtrl.spriteRender.sprite = null;
     }
 
     protected virtual Node GetRandomNode()
