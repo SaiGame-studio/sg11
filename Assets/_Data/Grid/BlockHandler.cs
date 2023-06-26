@@ -14,6 +14,7 @@ public class BlockHandler : GridAbstract
         Transform chooseObj;
         if (this.firstBlock == null)
         {
+            this.ctrl.pathfinding.DataReset();
             this.firstBlock = blockCtrl;
             pos = blockCtrl.transform.position;
             chooseObj = this.ctrl.blockSpawner.Spawn(BlockSpawner.CHOOSE, pos, Quaternion.identity);
@@ -35,7 +36,6 @@ public class BlockHandler : GridAbstract
 
         this.firstBlock = null;
         this.lastBlock = null;
-        //this.ctrl.pathfinding.DataReset();
     }
 
     protected virtual void FreeBlocks()
