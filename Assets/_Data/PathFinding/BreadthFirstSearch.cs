@@ -69,7 +69,6 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
     protected virtual bool IsPathFound()
     {
         int nodeCount = this.finalPath.Count;
-        //Debug.Log("nodeCount: " + nodeCount);
         return nodeCount > 0;
     }
 
@@ -170,15 +169,20 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
     protected virtual int CountDirectionFromSteps(List<NodeStep> steps)
     {
-        NodeDirections nodeDirection;
-        List<NodeDirections> directions = new List<NodeDirections>();
+        NodeDirections lastDirection = NodeDirections.noDirection;
+        NodeDirections currentDirection;
+        int turnCount = 0;
         foreach (NodeStep nodeStep in steps)
         {
-            nodeDirection = nodeStep.direction;
-            if (directions.Contains(nodeDirection)) continue;
-            directions.Add(nodeDirection);
+            currentDirection = nodeStep.direction;
+            if(currentDirection != lastDirection)
+            {
+                lastDirection = currentDirection;
+                turnCount++;
+            }
         }
-        return directions.Count;
+
+        return turnCount;
     }
 
     protected virtual List<NodeStep> BuildNodeStepPath(Node currentNode, Node startNode)

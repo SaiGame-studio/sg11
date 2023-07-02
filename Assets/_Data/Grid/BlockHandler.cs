@@ -10,6 +10,8 @@ public class BlockHandler : GridAbstract
 
     public virtual void SetNode(BlockCtrl blockCtrl)
     {
+        if (this.IsBlockRemoved(blockCtrl)) return;
+
         Vector3 pos;
         Transform chooseObj;
         if (this.firstBlock == null)
@@ -36,6 +38,12 @@ public class BlockHandler : GridAbstract
 
         this.firstBlock = null;
         this.lastBlock = null;
+    }
+
+    protected virtual bool IsBlockRemoved(BlockCtrl blockCtrl)
+    {
+        Node node = blockCtrl.blockData.node;
+        return !node.occupied && node.blockPlaced;
     }
 
     protected virtual void FreeBlocks()
