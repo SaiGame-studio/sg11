@@ -10,6 +10,7 @@ public class GridSystem : GridAbstract
     private float offsetX = 0.2f;
     public BlocksProfileSO blocksProfile;
     public List<Node> nodes;
+    public List<BlockCtrl> blocks;
     public List<int> nodeIds;
     public List<Node> freeNodes = new List<Node>();
 
@@ -131,6 +132,7 @@ public class GridSystem : GridAbstract
                 Transform block = this.ctrl.blockSpawner.Spawn(BlockSpawner.BLOCK, pos, Quaternion.identity);
                 BlockCtrl blockCtrl = block.GetComponent<BlockCtrl>();
                 blockCtrl.blockData.SetSprite(sprite);
+                GridManagerCtrl.Instance.gridSystem.blocks.Add(blockCtrl);
 
                 this.LinkNodeBlock(node, blockCtrl);
                 block.name = "Block_" + node.x.ToString() + "_" + node.y.ToString();
@@ -153,6 +155,7 @@ public class GridSystem : GridAbstract
         this.freeNodes.Add(node);
         node.occupied = false;
         node.blockCtrl.spriteRender.sprite = null;
+        this.blocks.Remove(node.blockCtrl);
     }
 
     protected virtual Node GetRandomNode()

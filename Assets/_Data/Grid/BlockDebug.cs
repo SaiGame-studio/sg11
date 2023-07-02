@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class BlockDebug : GridAbstract
 {
-    [Header("Grid Manager Ctrl")]
+    [Header("Block Debug")]
     private static BlockDebug instance;
     public static BlockDebug Instance => instance;
 
@@ -39,6 +39,7 @@ public class BlockDebug : GridAbstract
         node.occupied = true;
         Sprite sprite = node.blockCtrl.sprite;
         node.blockCtrl.SetSprite(sprite);
+        this.ctrl.gridSystem.blocks.Add(node.blockCtrl);
     }
 
     public virtual void ClearDebug()
