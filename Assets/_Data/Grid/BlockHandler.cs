@@ -10,6 +10,7 @@ public class BlockHandler : GridAbstract
 
     public virtual void SetNode(BlockCtrl blockCtrl)
     {
+        Debug.Log("SetNode: " + blockCtrl.name);
         if (this.IsBlockRemoved(blockCtrl)) return;
 
         Vector3 pos;

@@ -12,7 +12,7 @@ public class GridManagerCtrl : SaiMonoBehaviour
     public BlockHandler blockHandler;
     public BlockAuto blockAuto;
     public GridSystem gridSystem;
-    public IPathfinding pathfinding;
+    public AbstractPathfinding pathfinding;
 
     protected override void Awake()
     {
@@ -62,7 +62,7 @@ public class GridManagerCtrl : SaiMonoBehaviour
     protected virtual void LoadPathfinding()
     {
         if (this.pathfinding != null) return;
-        this.pathfinding = transform.GetComponentInChildren<IPathfinding>();
+        this.pathfinding = transform.GetComponentInChildren<AbstractPathfinding>();
         Debug.LogWarning(transform.name + " LoadPathfinding", gameObject);
     }
 }

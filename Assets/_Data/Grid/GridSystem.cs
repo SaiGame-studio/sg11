@@ -7,7 +7,7 @@ public class GridSystem : GridAbstract
     [Header("Grid System")]
     public int width = 18;
     public int height = 11;
-    private float offsetX = 0.2f;
+    public float offsetX = 0.2f;
     public BlocksProfileSO blocksProfile;
     public List<Node> nodes;
     public List<BlockCtrl> blocks;
@@ -185,5 +185,11 @@ public class GridSystem : GridAbstract
     {
         blockCtrl.blockData.SetNode(node);
         node.blockCtrl = blockCtrl;
+    }
+
+    public virtual BlockCtrl GetRandomBlock()
+    {
+        int randIndex = Random.Range(0, this.blocks.Count);
+        return this.blocks[randIndex];
     }
 }

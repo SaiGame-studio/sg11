@@ -7,6 +7,8 @@ public class BlockDebug : GridAbstract
     [Header("Block Debug")]
     private static BlockDebug instance;
     public static BlockDebug Instance => instance;
+    public bool continuePlay = true;
+    public float autoPlaySpeed = 0.5f;
 
     protected override void Awake()
     {
@@ -54,5 +56,38 @@ public class BlockDebug : GridAbstract
         {
             if (names.Contains(clone.name)) BlockSpawner.Instance.Despawn(clone);
         }
+    }
+
+    public virtual void AutoPlay()
+    {
+        GridManagerCtrl.Instance.blockAuto.ShowHint();
+
+        Invoke(nameof(this.AutoClickBlocks), this.autoPlaySpeed);
+    }
+
+    protected virtual void AutoClickBlocks()
+    {
+        BlockCtrl firstBlock = GridManagerCtrl.Instance.blockAuto.firstBlock;
+        BlockCtrl secondBlock = GridManagerCtrl.Instance.blockAuto.secondBlock;
+
+        Debug.Log("==== AutoPlay ==============================");
+        Debug.Log("blockCtrl: " + firstBlock.blockData.node.Name());
+        Debug.Log("sameBlock: " + secondBlock.blockData.node.Name());
+
+        if (firstBlock.blockData.node.occupied == false
+            || secondBlock.blockData.node.occupied == false)
+        {
+            Debug.Log("No more Move");
+
+            return;
+        }
+
+
+        GridManagerCtrl.Instance.blockHandler.SetNode(firstBlock);
+        GridManagerCtrl.Instance.blockHandler.SetNode(secondBlock);
+
+        this.ClearDebug();
+
+        if (this.continuePlay) Invoke(nameof(this.AutoPlay), this.autoPlaySpeed);
     }
 }

@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class BlockAuto : GridAbstract
 {
-    //[Header("Block Auto")]
-    
+    [Header("Block Auto")]
+    public BlockCtrl firstBlock;
+    public BlockCtrl secondBlock;
+
+
     public virtual void ShowHint()
     {
         Debug.LogWarning("ShowHint");
@@ -21,17 +24,14 @@ public class BlockAuto : GridAbstract
                 bool found = GridManagerCtrl.Instance.pathfinding.FindPath(blockCtrl, sameBlock);
                 if (found)
                 {
-                    Debug.Log("==================================");
-                    Debug.Log("blockCtrl: " + blockCtrl.blockData.node.Name());
-                    Debug.Log("sameBlock: " + sameBlock.blockData.node.Name());
+                    this.firstBlock = blockCtrl;
+                    this.secondBlock = sameBlock;
                     return;
-                }
-                else
-                {
-                    Debug.Log("NotFound");
                 }
             }
         }
+
+        Debug.Log("Not Found");
     }
 
     protected virtual List<BlockCtrl> GetSameBlocks(BlockCtrl checkBlock)
@@ -46,6 +46,30 @@ public class BlockAuto : GridAbstract
         return sameBlocks;
     }
 
+    public virtual void ShuffleBlocks()
+    {
+        BlockCtrl randomBlock;
+        foreach(BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
+        {
+            randomBlock = this.ctrl.gridSystem.GetRandomBlock();
+            this.SwapBlocks(blockCtrl, randomBlock);
+        }
+    }
 
+    protected virtual void SwapBlocks(BlockCtrl blockCtrl, BlockCtrl randomBlock) {
+        if (blockCtrl == randomBlock) return;
+        BlockCtrl temp = blockCtrl;
 
+        blockCtrl.spriteRender.sprite = randomBlock.sprite;
+        blockCtrl.sprite = randomBlock.sprite;
+        blockCtrl.blockID = randomBlock.blockID;
+        blockCtrl.blockData = randomBlock.blockData;
+        blockCtrl.neighbors = randomBlock.neighbors;
+
+        randomBlock.spriteRender.sprite = temp.sprite;
+        randomBlock.sprite = temp.sprite;
+        randomBlock.blockID = temp.blockID;
+        randomBlock.blockData = temp.blockData;
+        randomBlock.neighbors = temp.neighbors;
+    }
 }
