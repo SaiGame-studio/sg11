@@ -1,15 +1,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BreadthFirstSearch : GridAbstract, IPathfinding
+public class BreadthFirstSearch : AbstractPathfinding
 {
     [Header("Breadth First Search")]
+    public GridManagerCtrl ctrl;
     public List<Node> queue = new List<Node>();
     public List<Node> finalPath = new List<Node>();
     public List<NodeStep> cameFromNodes = new List<NodeStep>();
     public List<Node> visited = new List<Node>();
 
-    public virtual void DataReset()
+    protected override void LoadComponents()
+    {
+        base.LoadComponents();
+        this.LoadCtrl();
+    }
+
+    protected virtual void LoadCtrl()
+    {
+        if (this.ctrl != null) return;
+        this.ctrl = transform.parent.GetComponent<GridManagerCtrl>();
+        Debug.LogWarning(transform.name + " LoadCtrl", gameObject);
+    }
+
+    public override void DataReset()
     {
         this.queue = new List<Node>();
         this.finalPath = new List<Node>();
@@ -17,7 +31,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
         this.visited = new List<Node>();
     }
 
-    public virtual bool FindPath(BlockCtrl startBlock, BlockCtrl targetBlock)
+    public override bool FindPath(BlockCtrl startBlock, BlockCtrl targetBlock)
     {
         //Debug.Log("FindPath");
         Node startNode = startBlock.blockData.node;
@@ -60,7 +74,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
 
         }
 
-        this.ShowVisited();
+        //this.ShowVisited();
         this.ShowPath();
 
         return this.IsPathFound();
@@ -198,7 +212,7 @@ public class BreadthFirstSearch : GridAbstract, IPathfinding
             if (step.fromNode == startNode) break;
         }
 
-        this.ShowScanStep(currentNode);
+        //this.ShowScanStep(currentNode);
         return steps;
     }
 
