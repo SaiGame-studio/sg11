@@ -4,11 +4,14 @@ using UnityEngine;
 public class BreadthFirstSearch : AbstractPathfinding
 {
     [Header("Breadth First Search")]
+    public bool isShowVisited = true;
+    public bool isShowScanStep = true;
     public GridManagerCtrl ctrl;
     public List<Node> queue = new List<Node>();
     public List<Node> finalPath = new List<Node>();
     public List<NodeStep> cameFromNodes = new List<NodeStep>();
     public List<Node> visited = new List<Node>();
+    public List<Node> blackList = new List<Node>();
 
     protected override void LoadComponents()
     {
@@ -33,6 +36,14 @@ public class BreadthFirstSearch : AbstractPathfinding
 
     public override bool FindPath(BlockCtrl startBlock, BlockCtrl targetBlock)
     {
+        bool isPathFound = false;
+        isPathFound = this.TryFindPath(startBlock, targetBlock);
+
+        return isPathFound;
+    }
+
+    public virtual bool TryFindPath(BlockCtrl startBlock, BlockCtrl targetBlock)
+    {
         //Debug.Log("FindPath");
         Node startNode = startBlock.blockData.node;
         Node targetNode = targetBlock.blockData.node;
@@ -56,6 +67,7 @@ public class BreadthFirstSearch : AbstractPathfinding
             foreach (Node neighbor in current.Neighbors())
             {
                 if (neighbor == null) continue;
+                if (this.blackList.Contains(neighbor)) continue;
                 if (this.visited.Contains(neighbor)) continue;
                 if (!this.IsValidPosition(neighbor, targetNode)) continue;
 
@@ -71,13 +83,20 @@ public class BreadthFirstSearch : AbstractPathfinding
 
                 this.Enqueue(neighbor);
             }
-
         }
 
-        //this.ShowVisited();
+        if (this.isShowVisited) this.ShowVisited();
         this.ShowPath();
 
         return this.IsPathFound();
+    }
+
+    protected virtual void BlackListFirstNeighborNode()
+    {
+        NodeStep nodeStep = this.cameFromNodes[1];
+        //Debug.Log("fromNode: "+nodeStep.fromNode.Name());
+        //Debug.Log("toNode: " + nodeStep.toNode.Name());
+        this.blackList.Add(nodeStep.toNode);
     }
 
     protected virtual bool IsPathFound()
@@ -189,7 +208,7 @@ public class BreadthFirstSearch : AbstractPathfinding
         foreach (NodeStep nodeStep in steps)
         {
             currentDirection = nodeStep.direction;
-            if(currentDirection != lastDirection)
+            if (currentDirection != lastDirection)
             {
                 lastDirection = currentDirection;
                 turnCount++;
@@ -212,7 +231,7 @@ public class BreadthFirstSearch : AbstractPathfinding
             if (step.fromNode == startNode) break;
         }
 
-        //this.ShowScanStep(currentNode);
+        if (this.isShowScanStep) this.ShowScanStep(currentNode);
         return steps;
     }
 
