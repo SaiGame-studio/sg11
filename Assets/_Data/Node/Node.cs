@@ -36,4 +36,10 @@ public class Node
     {
         return this.x + "x" + this.y;
     }
+
+    public virtual void Dump(string prefix)
+    {
+        Debug.Log(prefix + this.Name()+" o-"+this.occupied);
+    }
+
 }
