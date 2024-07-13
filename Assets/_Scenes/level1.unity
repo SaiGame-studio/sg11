@@ -1263,7 +1263,7 @@ GameObject:
   - component: {fileID: 950010296}
   - component: {fileID: 950010297}
   m_Layer: 0
-  m_Name: BreadthFirstSearch
+  m_Name: Pathfinding
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1292,17 +1292,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 950010295}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 32814fb168f4f704a97ca66a7fe3e01c, type: 3}
+  m_Script: {fileID: 11500000, guid: cf5ae7cade8c9604986a19787957817b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isShowVisited: 1
-  isShowScanStep: 1
   ctrl: {fileID: 1567163674}
-  queue: []
-  finalPath: []
-  cameFromNodes: []
-  visited: []
-  blackList: []
 --- !u!1 &964586251
 GameObject:
   m_ObjectHideFlags: 0
@@ -1906,9 +1899,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   blockSpawner: {fileID: 964586252}
   blockHandler: {fileID: 1777459315}
-  blockAuto: {fileID: 0}
+  blockAuto: {fileID: 807166121}
   gridSystem: {fileID: 1619264326}
-  pathfinding: {fileID: 0}
+  pathfinding: {fileID: 950010297}
 --- !u!1 &1598656580
 GameObject:
   m_ObjectHideFlags: 0
@@ -4812,7 +4805,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2088007657
 RectTransform:
   m_ObjectHideFlags: 0
