@@ -50,7 +50,7 @@ public class GridSystem : GridAbstract
         }
     }
 
-    protected virtual Node GetNodeByXY(int x, int y)
+    public virtual Node GetNodeByXY(int x, int y)
     {
         foreach (Node node in this.nodes)
         {

@@ -6,6 +6,7 @@ public class BtnHint : BaseButton
 {
     protected override void OnClick()
     {
+        BlockDebug.Instance.ClearDebug();
         GridManagerCtrl.Instance.blockAuto.ShowHint();
     }
 }

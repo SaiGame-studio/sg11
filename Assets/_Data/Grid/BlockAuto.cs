@@ -49,27 +49,27 @@ public class BlockAuto : GridAbstract
     public virtual void ShuffleBlocks()
     {
         BlockCtrl randomBlock;
+
         foreach(BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
         {
             randomBlock = this.ctrl.gridSystem.GetRandomBlock();
+            if (randomBlock.name == blockCtrl.name) continue;
             this.SwapBlocks(blockCtrl, randomBlock);
         }
     }
 
     protected virtual void SwapBlocks(BlockCtrl blockCtrl, BlockCtrl randomBlock) {
         if (blockCtrl == randomBlock) return;
-        BlockCtrl temp = blockCtrl;
+        BlockCtrl temp = blockCtrl.Clone();
+        Node tempNode = temp.blockData.node;
 
-        blockCtrl.spriteRender.sprite = randomBlock.sprite;
         blockCtrl.sprite = randomBlock.sprite;
-        blockCtrl.blockID = randomBlock.blockID;
-        blockCtrl.blockData = randomBlock.blockData;
-        blockCtrl.neighbors = randomBlock.neighbors;
+        blockCtrl.blockData.node = randomBlock.blockData.node;
+        blockCtrl.blockData.SetSprite(blockCtrl.sprite);
 
-        randomBlock.spriteRender.sprite = temp.sprite;
         randomBlock.sprite = temp.sprite;
-        randomBlock.blockID = temp.blockID;
-        randomBlock.blockData = temp.blockData;
-        randomBlock.neighbors = temp.neighbors;
+        randomBlock.blockData.node = tempNode;
+        randomBlock.blockData.SetSprite(randomBlock.sprite);
+
     }
 }

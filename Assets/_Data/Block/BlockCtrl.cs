@@ -11,6 +11,11 @@ public class BlockCtrl : SaiMonoBehaviour
     public BlockData blockData;
     public List<BlockCtrl> neighbors = new List<BlockCtrl>();
 
+    public BlockCtrl Clone()
+    {
+        return (BlockCtrl)this.MemberwiseClone();
+    }
+
     protected override void LoadComponents()
     {
         base.LoadComponents();

@@ -52,4 +52,10 @@ public class BlockHandler : GridAbstract
         this.ctrl.gridSystem.NodeFree(this.firstBlock.blockData.node);
         this.ctrl.gridSystem.NodeFree(this.lastBlock.blockData.node);
     }
+
+    public virtual void Unchoose()
+    {
+        this.firstBlock = null;
+        this.lastBlock = null;
+    }
 }
