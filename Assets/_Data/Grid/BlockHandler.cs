@@ -7,10 +7,13 @@ public class BlockHandler : GridAbstract
     [Header("Block Handler")]
     public BlockCtrl firstBlock;
     public BlockCtrl lastBlock;
+    protected bool nodeLinking = false;
+    protected float freeNodesDelay = 1f;
 
     public virtual void SetNode(BlockCtrl blockCtrl)
     {
         Debug.Log("SetNode: " + blockCtrl.name);
+        if (this.nodeLinking) return;
         if (this.IsBlockRemoved(blockCtrl)) return;
 
         Vector3 pos;
@@ -34,11 +37,8 @@ public class BlockHandler : GridAbstract
             && this.firstBlock.blockID == this.lastBlock.blockID)
         {
             bool isPathFound = this.ctrl.pathfinding.FindPath(this.firstBlock, this.lastBlock);
-            if (isPathFound) this.FreeBlocks();
+            if (isPathFound) this.LinkNodes();
         }
-
-        this.firstBlock = null;
-        this.lastBlock = null;
     }
 
     protected virtual bool IsBlockRemoved(BlockCtrl blockCtrl)
@@ -47,10 +47,21 @@ public class BlockHandler : GridAbstract
         return !node.occupied && node.blockPlaced;
     }
 
+    protected virtual void LinkNodes()
+    {
+        this.nodeLinking = true;
+        this.ctrl.linesDrawer.Drawing(this.ctrl.pathfinding.PathNodes, this.freeNodesDelay);
+        Invoke(nameof(this.FreeBlocks), this.freeNodesDelay);
+    }
+
     protected virtual void FreeBlocks()
     {
         this.ctrl.gridSystem.NodeFree(this.firstBlock.blockData.node);
         this.ctrl.gridSystem.NodeFree(this.lastBlock.blockData.node);
+
+        this.firstBlock = null;
+        this.lastBlock = null;
+        this.nodeLinking = false;
     }
 
     public virtual void Unchoose()

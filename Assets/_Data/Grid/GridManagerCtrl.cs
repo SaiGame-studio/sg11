@@ -13,6 +13,7 @@ public class GridManagerCtrl : SaiMonoBehaviour
     public BlockAuto blockAuto;
     public GridSystem gridSystem;
     public AbstractPathfinding pathfinding;
+    public LinesDrawer linesDrawer;
 
     protected override void Awake()
     {
@@ -29,6 +30,7 @@ public class GridManagerCtrl : SaiMonoBehaviour
         this.LoadPathfinding();
         this.LoadBlockHandler();
         this.LoadGridSystem();
+        this.LoadLinesDrawer();
     }
 
     protected virtual void LoadSpawner()
@@ -64,5 +66,12 @@ public class GridManagerCtrl : SaiMonoBehaviour
         if (this.pathfinding != null) return;
         this.pathfinding = transform.GetComponentInChildren<AbstractPathfinding>();
         Debug.LogWarning(transform.name + " LoadPathfinding", gameObject);
+    }
+
+    protected virtual void LoadLinesDrawer()
+    {
+        if (this.linesDrawer != null) return;
+        this.linesDrawer = transform.GetComponentInChildren<LinesDrawer>();
+        Debug.LogWarning(transform.name + " LoadLinesDrawer", gameObject);
     }
 }
