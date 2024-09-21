@@ -58,7 +58,7 @@ public class BlockAuto : GridAbstract
         }
     }
 
-    protected virtual void SwapBlocks(BlockCtrl blockCtrl, BlockCtrl randomBlock) {
+    protected virtual void _SwapBlocks(BlockCtrl blockCtrl, BlockCtrl randomBlock) {
         if (blockCtrl == randomBlock) return;
         BlockCtrl temp = blockCtrl.Clone();
         //BlockCtrl temp = blockCtrl;
@@ -71,5 +71,23 @@ public class BlockAuto : GridAbstract
         randomBlock.sprite = temp.sprite;
         randomBlock.blockData.node = tempNode;
         randomBlock.blockData.SetSprite(randomBlock.sprite);
+    }
+
+    public void SwapBlocks(BlockCtrl blockCtrl, BlockCtrl randomBlock)
+    {
+        if (blockCtrl == randomBlock) return;
+        BlockCtrl temp = blockCtrl.Clone();
+
+        blockCtrl.sprite = randomBlock.sprite;
+        blockCtrl.blockData.SetSprite(blockCtrl.sprite);
+        randomBlock.sprite = temp.sprite;
+        randomBlock.blockData.SetSprite(randomBlock.sprite);
+
+        blockCtrl.blockData.node.blockCtrl = blockCtrl;
+        blockCtrl.blockData.node.nodeObj.blockCtrl = blockCtrl;
+        randomBlock.blockData.node.blockCtrl = randomBlock;
+        randomBlock.blockData.node.nodeObj.blockCtrl = randomBlock;
+
+        //TODO: swap block data
     }
 }

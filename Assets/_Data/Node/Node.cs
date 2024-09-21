@@ -39,7 +39,7 @@ public class Node
 
     public virtual void Dump(string prefix)
     {
-        Debug.Log(prefix + this.Name()+" o-"+this.occupied);
+        //Debug.Log(prefix + this.Name()+" o-"+this.occupied);
     }
 
 }

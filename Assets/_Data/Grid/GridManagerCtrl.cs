@@ -14,6 +14,7 @@ public class GridManagerCtrl : SaiMonoBehaviour
     public GridSystem gridSystem;
     public AbstractPathfinding pathfinding;
     public LinesDrawer linesDrawer;
+    public GameLevel gameLevel;
 
     protected override void Awake()
     {
@@ -31,6 +32,14 @@ public class GridManagerCtrl : SaiMonoBehaviour
         this.LoadBlockHandler();
         this.LoadGridSystem();
         this.LoadLinesDrawer();
+        this.LoadGameLevel();
+    }
+
+    protected virtual void LoadGameLevel()
+    {
+        if (this.gameLevel != null) return;
+        this.gameLevel = transform.GetComponentInChildren<GameLevel>();
+        Debug.LogWarning(transform.name + " LoadSpawner", gameObject);
     }
 
     protected virtual void LoadSpawner()
