@@ -8,7 +8,7 @@ public class BlockHandler : GridAbstract
     public BlockCtrl firstBlock;
     public BlockCtrl lastBlock;
     protected bool nodeLinking = false;
-    protected float freeNodesDelay = 1f;
+    protected float freeNodesDelay = 0.5f;
 
     public virtual void SetNode(BlockCtrl blockCtrl)
     {
@@ -62,6 +62,8 @@ public class BlockHandler : GridAbstract
         this.firstBlock = null;
         this.lastBlock = null;
         this.nodeLinking = false;
+
+        this.ctrl.gameLevel.GetCurrent().MoveBlocks();
     }
 
     public virtual void Unchoose()

@@ -30,7 +30,7 @@ public class LinesSearch : AbstractPathfinding
         Node targetNode = targetBlock.blockData.node;
         this.pathNodes.Add(startNode);
 
-        Debug.Log("==============================");
+        //Debug.Log("==============================");
         startNode.Dump("startNode: ");
         targetNode.Dump("targetNode: ");
 
@@ -42,32 +42,31 @@ public class LinesSearch : AbstractPathfinding
         }
 
         //Two cross points
-        Debug.Log("== Two cross points =================");
+        //Debug.Log("== Two cross points =================");
         List<Vector2> twoCrossPoints = this.GetCrossPoints(startNode, targetNode);
         if (this.IsCrossPointsLinked(startNode, targetNode, twoCrossPoints)) return true;
 
         List<Vector2> multiCrossPoints;
 
         //Bellow Cross Point
-        Debug.Log("== Bellow cross points =================");
+        //Debug.Log("== Bellow cross points =================");
         multiCrossPoints = this.GetBellowCrossPoints(startNode);
         if (this.CheckMultiCrossPoints(multiCrossPoints, targetNode)) return true;
 
         //Above Cross Point
-        Debug.Log("== Above cross points =================");
+        //Debug.Log("== Above cross points =================");
         multiCrossPoints = this.GetAboveCrossPoints(startNode);
         if (this.CheckMultiCrossPoints(multiCrossPoints, targetNode)) return true;
 
         //Right Cross Point
-        Debug.Log("== Right cross points =================");
+        //Debug.Log("== Right cross points =================");
         multiCrossPoints = this.GetRightCrossPoints(startNode);
         if (this.CheckMultiCrossPoints(multiCrossPoints, targetNode)) return true;
 
         //Left Cross Point
-        Debug.Log("== Left cross points =================");
+        //Debug.Log("== Left cross points =================");
         multiCrossPoints = this.GetLeftCrossPoints(startNode);
         if (this.CheckMultiCrossPoints(multiCrossPoints, targetNode)) return true;
-
 
         return false;
     }
