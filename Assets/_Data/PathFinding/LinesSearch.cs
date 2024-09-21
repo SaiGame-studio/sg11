@@ -21,20 +21,25 @@ public class LinesSearch : AbstractPathfinding
 
     public override void DataReset()
     {
-
+        this.pathNodes = new List<Node>();
     }
 
     public override bool FindPath(BlockCtrl startBlock, BlockCtrl targetBlock)
     {
         Node startNode = startBlock.blockData.node;
         Node targetNode = targetBlock.blockData.node;
+        this.pathNodes.Add(startNode);
 
         Debug.Log("==============================");
         startNode.Dump("startNode: ");
         targetNode.Dump("targetNode: ");
 
         //Line up
-        //if (this.IsLineUp(startNode, stargetNode)) return !this.IsLineBlocked(startNode, stargetNode);
+        if (this.IsLineUp(startNode, targetNode) && !this.IsLineBlocked(startNode, targetNode))
+        {
+            this.pathNodes.Add(targetNode);
+            return true;
+        }
 
         //Two cross points
         Debug.Log("== Two cross points =================");
@@ -153,7 +158,13 @@ public class LinesSearch : AbstractPathfinding
             bool firstCrossLinked = !this.IsLineBlocked(startNode, node);
             bool secondCrossLinked = !this.IsLineBlocked(targetNode, node);
 
-            if (firstCrossLinked && secondCrossLinked) return true;
+            if (!node.occupied && firstCrossLinked && secondCrossLinked)
+            {
+                this.pathNodes.Add(startNode);
+                this.pathNodes.Add(node);
+                this.pathNodes.Add(targetNode);
+                return true;
+            }
         }
 
         return false;
@@ -254,5 +265,11 @@ public class LinesSearch : AbstractPathfinding
     protected virtual Node GetNode(int x, int y)
     {
         return GridManagerCtrl.Instance.gridSystem.GetNodeByXY(x, y);
+    }
+
+    protected virtual void AddNodeToPath(Node node)
+    {
+        if (this.pathNodes.Contains(node)) return;
+        this.pathNodes.Add(node);
     }
 }
