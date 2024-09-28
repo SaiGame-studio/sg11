@@ -11,14 +11,12 @@ public class BlockAuto : GridAbstract
 
     public virtual void ShowHint()
     {
-        Debug.LogWarning("ShowHint");
-
         List<BlockCtrl> sameBlocks = new List<BlockCtrl>();
-        foreach(BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
+        foreach (BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
         {
             sameBlocks.Clear();
             sameBlocks = this.GetSameBlocks(blockCtrl);
-            foreach(BlockCtrl sameBlock in sameBlocks)
+            foreach (BlockCtrl sameBlock in sameBlocks)
             {
                 this.ctrl.pathfinding.DataReset();
                 bool found = GridManagerCtrl.Instance.pathfinding.FindPath(blockCtrl, sameBlock);
@@ -37,7 +35,7 @@ public class BlockAuto : GridAbstract
     protected virtual List<BlockCtrl> GetSameBlocks(BlockCtrl checkBlock)
     {
         List<BlockCtrl> sameBlocks = new List<BlockCtrl>();
-        foreach(BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
+        foreach (BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
         {
             if (blockCtrl == checkBlock) continue;
             if (blockCtrl.blockID == checkBlock.blockID) sameBlocks.Add(blockCtrl);
@@ -50,7 +48,7 @@ public class BlockAuto : GridAbstract
     {
         BlockCtrl randomBlock;
 
-        foreach(BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
+        foreach (BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
         {
             randomBlock = this.ctrl.gridSystem.GetRandomBlock();
             if (randomBlock.name == blockCtrl.name) continue;
@@ -58,36 +56,62 @@ public class BlockAuto : GridAbstract
         }
     }
 
-    protected virtual void _SwapBlocks(BlockCtrl blockCtrl, BlockCtrl randomBlock) {
-        if (blockCtrl == randomBlock) return;
-        BlockCtrl temp = blockCtrl.Clone();
-        //BlockCtrl temp = blockCtrl;
-        Node tempNode = temp.blockData.node;
+    public bool SwapBlocks(BlockCtrl firstBlock, BlockCtrl secondBlock)
+    {
+        if (firstBlock == secondBlock) return false;
+        Debug.Log("== SwapBlocks ====================");
 
-        blockCtrl.sprite = randomBlock.sprite;
-        blockCtrl.blockData.node = randomBlock.blockData.node;
-        blockCtrl.blockData.SetSprite(blockCtrl.sprite);
-
-        randomBlock.sprite = temp.sprite;
-        randomBlock.blockData.node = tempNode;
-        randomBlock.blockData.SetSprite(randomBlock.sprite);
+        this.SwapBlockData(firstBlock, secondBlock);
+        this.SwapModel(firstBlock, secondBlock);
+        this.SwapNodeData(firstBlock.blockData.node, secondBlock.blockData.node);
+        return true;
     }
 
-    public void SwapBlocks(BlockCtrl blockCtrl, BlockCtrl randomBlock)
+    protected virtual void SwapModel(BlockCtrl firstBlock, BlockCtrl secondBlock)
     {
-        if (blockCtrl == randomBlock) return;
-        BlockCtrl temp = blockCtrl.Clone();
 
-        blockCtrl.sprite = randomBlock.sprite;
-        blockCtrl.blockData.SetSprite(blockCtrl.sprite);
-        randomBlock.sprite = temp.sprite;
-        randomBlock.blockData.SetSprite(randomBlock.sprite);
+        Transform firstModel = firstBlock.model;
+        Transform secondModel = secondBlock.model;
 
-        blockCtrl.blockData.node.blockCtrl = blockCtrl;
-        blockCtrl.blockData.node.nodeObj.blockCtrl = blockCtrl;
-        randomBlock.blockData.node.blockCtrl = randomBlock;
-        randomBlock.blockData.node.nodeObj.blockCtrl = randomBlock;
+        Transform firstParent = firstModel.parent;
+        Transform secondParent = secondModel.parent;
 
-        //TODO: swap block data
+        firstModel.parent = secondParent;
+        secondModel.parent = firstParent;
+
+        firstBlock.ReloadModel();
+        secondBlock.ReloadModel();
+
+        firstModel.localPosition = Vector3.zero;
+        secondModel.localPosition = Vector3.zero;
+    }
+
+    protected virtual void SwapBlockData(BlockCtrl firstBlock, BlockCtrl secondBlock)
+    {
+        Sprite tempSprite = firstBlock.sprite;
+        string tempBlockId = firstBlock.blockID;
+
+        firstBlock.sprite = secondBlock.sprite;
+        firstBlock.blockID = secondBlock.blockID;
+
+        secondBlock.sprite = tempSprite;
+        secondBlock.blockID = tempBlockId;
+    }
+
+
+    protected virtual void SwapNodeData(Node firstNode, Node secondNode)
+    {
+        Node tempNode = secondNode.Clone();
+
+        Debug.Log("secondNode: " + secondNode.Name() + " / " + secondNode.occupied, secondNode.blockCtrl.gameObject);
+        Debug.Log("firstNode: " + firstNode.Name() + " / " + firstNode.occupied, firstNode.blockCtrl.gameObject);
+        Debug.Log("tempNode: " + tempNode.Name() + " / " + tempNode.occupied, tempNode.blockCtrl.gameObject);
+
+        secondNode.occupied = firstNode.occupied;
+        firstNode.occupied = tempNode.occupied;
+
+        Debug.Log("secondNode: " + secondNode.Name() + " / " + secondNode.occupied, secondNode.blockCtrl.gameObject);
+        Debug.Log("firstNode: " + firstNode.Name() + " / " + firstNode.occupied, firstNode.blockCtrl.gameObject);
+        Debug.Log("tempNode: " + tempNode.Name() + " / " + tempNode.occupied, tempNode.blockCtrl.gameObject);
     }
 }
