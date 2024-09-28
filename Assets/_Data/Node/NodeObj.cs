@@ -7,7 +7,6 @@ public class NodeObj : SaiMonoBehaviour
 {
     public TextMeshPro text;
     public Color textColor = Color.red;
-    public BlockCtrl blockCtrl;
 
     protected override void LoadComponents()
     {

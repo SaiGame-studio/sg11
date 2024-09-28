@@ -20,14 +20,19 @@ public class Node
     public NodeObj nodeObj;
     public BlockCtrl blockCtrl;
 
+    public Node Clone()
+    {
+        return (Node)this.MemberwiseClone();
+    }
+
     public virtual List<Node> Neighbors()
     {
         List<Node> nodes = new List<Node>
         {
-            up,
-            right,
-            down,
-            left
+            this.up,
+            this.right,
+            this.down,
+            this.left
         };
         return nodes;
     }

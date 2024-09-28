@@ -257,7 +257,6 @@ public class LinesSearch : AbstractPathfinding
     {
         if (startNode.x == targetNode.x) return true;
         if (startNode.y == targetNode.y) return true;
-        Debug.Log("Not Line Up");
         return false;
     }
 

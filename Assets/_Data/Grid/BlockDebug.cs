@@ -71,14 +71,13 @@ public class BlockDebug : GridAbstract
         BlockCtrl secondBlock = GridManagerCtrl.Instance.blockAuto.secondBlock;
 
         Debug.Log("==== AutoPlay ==============================");
-        Debug.Log("blockCtrl: " + firstBlock.blockData.node.Name());
-        Debug.Log("sameBlock: " + secondBlock.blockData.node.Name());
+        Debug.Log("blockCtrl: " + firstBlock.blockData.node.Name(), firstBlock.gameObject);
+        Debug.Log("sameBlock: " + secondBlock.blockData.node.Name(), secondBlock.gameObject);
 
         if (firstBlock.blockData.node.occupied == false
             || secondBlock.blockData.node.occupied == false)
         {
-            Debug.Log("No more Move");
-
+            Debug.Log("== No more Move ==============");
             return;
         }
 
