@@ -7,6 +7,7 @@ public class BlockAuto : GridAbstract
     [Header("Block Auto")]
     public BlockCtrl firstBlock;
     public BlockCtrl secondBlock;
+    public BlockCtrl lastBlock;
 
 
     public virtual void ShowHint()
@@ -58,12 +59,15 @@ public class BlockAuto : GridAbstract
 
     public bool SwapBlocks(BlockCtrl firstBlock, BlockCtrl secondBlock)
     {
+        if (this.lastBlock == firstBlock) return false;
         if (firstBlock == secondBlock) return false;
-        Debug.Log("== SwapBlocks ====================");
+        if (firstBlock == null && secondBlock == null) return false;
+        Debug.Log(firstBlock.blockData.node.Name() + " / " + secondBlock.blockData.node.Name());
 
         this.SwapBlockData(firstBlock, secondBlock);
         this.SwapModel(firstBlock, secondBlock);
         this.SwapNodeData(firstBlock.blockData.node, secondBlock.blockData.node);
+        this.lastBlock = firstBlock;
         return true;
     }
 
@@ -103,15 +107,15 @@ public class BlockAuto : GridAbstract
     {
         Node tempNode = secondNode.Clone();
 
-        Debug.Log("secondNode: " + secondNode.Name() + " / " + secondNode.occupied, secondNode.blockCtrl.gameObject);
-        Debug.Log("firstNode: " + firstNode.Name() + " / " + firstNode.occupied, firstNode.blockCtrl.gameObject);
-        Debug.Log("tempNode: " + tempNode.Name() + " / " + tempNode.occupied, tempNode.blockCtrl.gameObject);
+        //Debug.Log("secondNode: " + secondNode.Name() + " / " + secondNode.occupied, secondNode.blockCtrl.gameObject);
+        //Debug.Log("firstNode: " + firstNode.Name() + " / " + firstNode.occupied, firstNode.blockCtrl.gameObject);
+        //Debug.Log("tempNode: " + tempNode.Name() + " / " + tempNode.occupied, tempNode.blockCtrl.gameObject);
 
         secondNode.occupied = firstNode.occupied;
         firstNode.occupied = tempNode.occupied;
 
-        Debug.Log("secondNode: " + secondNode.Name() + " / " + secondNode.occupied, secondNode.blockCtrl.gameObject);
-        Debug.Log("firstNode: " + firstNode.Name() + " / " + firstNode.occupied, firstNode.blockCtrl.gameObject);
-        Debug.Log("tempNode: " + tempNode.Name() + " / " + tempNode.occupied, tempNode.blockCtrl.gameObject);
+        //Debug.Log("secondNode: " + secondNode.Name() + " / " + secondNode.occupied, secondNode.blockCtrl.gameObject);
+        //Debug.Log("firstNode: " + firstNode.Name() + " / " + firstNode.occupied, firstNode.blockCtrl.gameObject);
+        //Debug.Log("tempNode: " + tempNode.Name() + " / " + tempNode.occupied, tempNode.blockCtrl.gameObject);
     }
 }
