@@ -1,11 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class BlockCtrl : SaiMonoBehaviour
 {
     [Header("Block Ctrl")]
     public Transform model;
+    public Transform blockBackground;
+    public SortingGroup sortingGroup;
     public SpriteRenderer spriteRender;
     public Sprite sprite;
     public string blockID = "#";
@@ -21,7 +24,9 @@ public class BlockCtrl : SaiMonoBehaviour
     {
         base.LoadComponents();
         this.LoadModel();
+        this.LoadBlockBackground();
         this.LoadBlockData();
+        this.LoadSortingGroup();
     }
 
     protected virtual void LoadModel()
@@ -29,6 +34,20 @@ public class BlockCtrl : SaiMonoBehaviour
         if (this.model != null) return;
         this.ReloadModel();
         Debug.Log(transform.name + " LoadModel", gameObject);
+    }
+
+    protected virtual void LoadBlockBackground()
+    {
+        if (this.blockBackground != null) return;
+        this.blockBackground = transform.Find("BlockBackground");
+        Debug.Log(transform.name + " LoadBlockBackground", gameObject);
+    }
+
+    protected virtual void LoadSortingGroup()
+    {
+        if (this.sortingGroup != null) return;
+        this.sortingGroup = GetComponent<SortingGroup>();
+        Debug.Log(transform.name + " LoadSortingGroup", gameObject);
     }
 
     public virtual void ReloadModel() {
