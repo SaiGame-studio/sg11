@@ -5,14 +5,22 @@ using UnityEngine;
 public class BlockAuto : GridAbstract
 {
     [Header("Block Auto")]
+    public bool isNextBlockExist = false;
     public BlockCtrl firstBlock;
     public BlockCtrl secondBlock;
+    public BlockCtrl hintBlock;
     public BlockCtrl lastBlock;
 
-
-    public virtual void ShowHint()
+    public virtual void ClearBlocks()
     {
-        List<BlockCtrl> sameBlocks = new List<BlockCtrl>();
+        this.hintBlock = this.firstBlock = this.secondBlock = null;
+    }
+
+    public virtual void CheckNextBlock()
+    {
+        this.isNextBlockExist = true;
+        this.ClearBlocks();
+        List<BlockCtrl> sameBlocks = new();
         foreach (BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
         {
             sameBlocks.Clear();
@@ -21,24 +29,31 @@ public class BlockAuto : GridAbstract
             {
                 this.ctrl.pathfinding.DataReset();
                 bool found = GridManagerCtrl.Instance.pathfinding.FindPath(blockCtrl, sameBlock);
-                if (found)
-                {
-                    this.firstBlock = blockCtrl;
-                    this.secondBlock = sameBlock;
-                    return;
-                }
+                if (!found) continue;
+                this.firstBlock = blockCtrl;
+                this.secondBlock = sameBlock;
             }
         }
 
-        Debug.Log("Not Found");
+        if (this.firstBlock == null) this.isNextBlockExist = false;
+    }
+
+    public virtual BlockCtrl LoadHintBlock()
+    {
+        this.CheckNextBlock();
+        this.hintBlock = this.firstBlock;
+        GameManager.Instance.UseHint();
+        return this.hintBlock;
     }
 
     protected virtual List<BlockCtrl> GetSameBlocks(BlockCtrl checkBlock)
     {
-        List<BlockCtrl> sameBlocks = new List<BlockCtrl>();
+        List<BlockCtrl> sameBlocks = new();
         foreach (BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
         {
             if (blockCtrl == checkBlock) continue;
+            if (!blockCtrl.blockData.node.occupied) continue;
+            if (!checkBlock.blockData.node.occupied) continue;
             if (blockCtrl.blockID == checkBlock.blockID) sameBlocks.Add(blockCtrl);
         }
 
@@ -51,10 +66,13 @@ public class BlockAuto : GridAbstract
 
         foreach (BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
         {
+            if (!blockCtrl.IsOccupied()) continue;
             randomBlock = this.ctrl.gridSystem.GetRandomBlock();
             if (randomBlock.name == blockCtrl.name) continue;
             this.SwapBlocks(blockCtrl, randomBlock);
         }
+        this.CheckNextBlock();
+        GameManager.Instance.UseShuffle();
     }
 
     public bool SwapBlocks(BlockCtrl firstBlock, BlockCtrl secondBlock)
@@ -62,7 +80,7 @@ public class BlockAuto : GridAbstract
         if (this.lastBlock == firstBlock) return false;
         if (firstBlock == secondBlock) return false;
         if (firstBlock == null && secondBlock == null) return false;
-        Debug.Log(firstBlock.blockData.node.Name() + " / " + secondBlock.blockData.node.Name());
+        //Debug.Log(firstBlock.blockData.node.Name() + " / " + secondBlock.blockData.node.Name());
 
         this.SwapBlockData(firstBlock, secondBlock);
         this.SwapModel(firstBlock, secondBlock);
@@ -73,7 +91,6 @@ public class BlockAuto : GridAbstract
 
     protected virtual void SwapModel(BlockCtrl firstBlock, BlockCtrl secondBlock)
     {
-
         Transform firstModel = firstBlock.model;
         Transform secondModel = secondBlock.model;
 
@@ -101,7 +118,6 @@ public class BlockAuto : GridAbstract
         secondBlock.sprite = tempSprite;
         secondBlock.blockID = tempBlockId;
     }
-
 
     protected virtual void SwapNodeData(Node firstNode, Node secondNode)
     {

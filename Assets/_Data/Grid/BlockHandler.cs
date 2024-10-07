@@ -6,14 +6,11 @@ public class BlockHandler : GridAbstract
 {
     [Header("Block Handler")]
     public BlockCtrl firstBlock;
-    public BlockCtrl lastBlock;
-    protected bool nodeLinking = false;
-    protected float freeNodesDelay = 0.5f;
+    public BlockCtrl secondBlock;
+    [SerializeField] protected float freeNodesDelay = 0.5f;
 
     public virtual void SetNode(BlockCtrl blockCtrl)
     {
-        //Debug.Log("SetNode: " + blockCtrl.name);
-        if (this.nodeLinking) return;
         if (this.IsBlockRemoved(blockCtrl)) return;
 
         if (this.firstBlock == null)
@@ -24,15 +21,24 @@ public class BlockHandler : GridAbstract
             return;
         }
 
-        this.lastBlock = blockCtrl;
+        if (this.secondBlock != null)
+        {
+            return;
+        }
+
+        this.secondBlock = blockCtrl;
         this.ChooseBlock(blockCtrl);
 
         bool isPathFound = false;
-        if (this.firstBlock != this.lastBlock
-            && this.firstBlock.blockID == this.lastBlock.blockID)
+        if (this.firstBlock != this.secondBlock
+            && this.firstBlock.blockID == this.secondBlock.blockID)
         {
-            isPathFound = this.ctrl.pathfinding.FindPath(this.firstBlock, this.lastBlock);
-            if (isPathFound) this.LinkNodes();
+            isPathFound = this.ctrl.pathfinding.FindPath(this.firstBlock, this.secondBlock);
+            if (isPathFound)
+            {
+                this.LinkNodes();
+                this.ctrl.blockAuto.ClearBlocks();
+            }
 
         }
 
@@ -41,19 +47,14 @@ public class BlockHandler : GridAbstract
 
     protected virtual void ChooseBlock(BlockCtrl blockCtrl)
     {
-        //Spawn debug object
-        //Transform chooseObj;
-        //Vector3 pos = blockCtrl.transform.position;
-        //chooseObj = this.ctrl.blockSpawner.Spawn(BlockSpawner.CHOOSE, pos, Quaternion.identity);
-        //chooseObj.gameObject.SetActive(true);
-
         //If you got error here the create new layer with id is 1 and make it over the default layer
         blockCtrl.sortingGroup.sortingOrder = 1;
         blockCtrl.blockBackground.gameObject.SetActive(true);
     }
 
-    protected virtual void UnchooseBlock(BlockCtrl blockCtrl)
+    public virtual void UnchooseBlock(BlockCtrl blockCtrl)
     {
+        if (blockCtrl == null) return;
         //If you got error here make sure your default layer is 0
         blockCtrl.sortingGroup.sortingOrder = 0;
         blockCtrl.blockBackground.gameObject.SetActive(false);
@@ -67,7 +68,6 @@ public class BlockHandler : GridAbstract
 
     protected virtual void LinkNodes()
     {
-        this.nodeLinking = true;
         this.ctrl.linesDrawer.Drawing(this.ctrl.pathfinding.PathNodes, this.freeNodesDelay);
         Invoke(nameof(this.FreeBlocks), this.freeNodesDelay);
     }
@@ -75,20 +75,19 @@ public class BlockHandler : GridAbstract
     protected virtual void FreeBlocks()
     {
         this.ctrl.gridSystem.NodeFree(this.firstBlock.blockData.node);
-        this.ctrl.gridSystem.NodeFree(this.lastBlock.blockData.node);
+        this.ctrl.gridSystem.NodeFree(this.secondBlock.blockData.node);
 
         this.Unchoose();
-        this.nodeLinking = false;
-
-        this.ctrl.gameLevel.GetCurrent().MoveBlocks();
+        this.ctrl.gameLevel.GetCurrentLevelObj().MoveBlocks();
+        this.ctrl.blockAuto.CheckNextBlock();
     }
 
     public virtual void Unchoose()
     {
         this.UnchooseBlock(this.firstBlock);
-        this.UnchooseBlock(this.lastBlock);
+        this.UnchooseBlock(this.secondBlock);
 
         this.firstBlock = null;
-        this.lastBlock = null;
+        this.secondBlock = null;
     }
 }

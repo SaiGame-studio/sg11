@@ -8,6 +8,7 @@ public class GridManagerCtrl : SaiMonoBehaviour
     private static GridManagerCtrl instance;
     public static GridManagerCtrl Instance => instance;
 
+    public BlockDebug blockDebug;
     public BlockSpawner blockSpawner;
     public BlockHandler blockHandler;
     public BlockAuto blockAuto;
@@ -33,6 +34,14 @@ public class GridManagerCtrl : SaiMonoBehaviour
         this.LoadGridSystem();
         this.LoadLinesDrawer();
         this.LoadGameLevel();
+        this.LoadBlockDebug();
+    }
+
+    protected virtual void LoadBlockDebug()
+    {
+        if (this.blockDebug != null) return;
+        this.blockDebug = transform.GetComponentInChildren<BlockDebug>();
+        Debug.LogWarning(transform.name + " LoadBlockDebug", gameObject);
     }
 
     protected virtual void LoadGameLevel()

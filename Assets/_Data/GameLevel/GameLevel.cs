@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class GameLevel : GridAbstract
 {
-    [SerializeField] protected int current;
     [SerializeField] protected List<LevelAbstract> levels;
+    public List<LevelAbstract> Levels => levels;
 
     protected override void LoadComponents()
     {
@@ -16,7 +16,7 @@ public class GameLevel : GridAbstract
     protected virtual void LoadLevels()
     {
         if (this.levels.Count > 0) return;
-        foreach(Transform child in transform)
+        foreach (Transform child in transform)
         {
             LevelAbstract level = child.GetComponent<LevelAbstract>();
             if (level == null) continue;
@@ -25,13 +25,9 @@ public class GameLevel : GridAbstract
         Debug.Log(transform.name + ": LoadLevels", gameObject);
     }
 
-    public virtual void NextLevel()
+    public virtual LevelAbstract GetCurrentLevelObj()
     {
-        this.current++;
-    }
-
-    public virtual LevelAbstract GetCurrent()
-    {
-        return this.levels[this.current];
+        int level = GameManager.Instance.CurrentLevel;
+        return this.levels[level - 1];
     }
 }

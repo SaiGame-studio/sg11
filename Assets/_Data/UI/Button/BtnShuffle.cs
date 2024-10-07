@@ -6,6 +6,6 @@ public class BtnShuffle : BaseButton
 {
     protected override void OnClick()
     {
-        GridManagerCtrl.Instance.blockAuto.ShuffleBlocks();
+        if (GameManager.Instance.RemainShuffle > 0) GridManagerCtrl.Instance.blockAuto.ShuffleBlocks();
     }
 }

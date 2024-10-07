@@ -33,24 +33,25 @@ public class BlockCtrl : SaiMonoBehaviour
     {
         if (this.model != null) return;
         this.ReloadModel();
-        Debug.Log(transform.name + " LoadModel", gameObject);
+        Debug.LogWarning(transform.name + " LoadModel", gameObject);
     }
 
     protected virtual void LoadBlockBackground()
     {
         if (this.blockBackground != null) return;
         this.blockBackground = transform.Find("BlockBackground");
-        Debug.Log(transform.name + " LoadBlockBackground", gameObject);
+        Debug.LogWarning(transform.name + " LoadBlockBackground", gameObject);
     }
 
     protected virtual void LoadSortingGroup()
     {
         if (this.sortingGroup != null) return;
         this.sortingGroup = GetComponent<SortingGroup>();
-        Debug.Log(transform.name + " LoadSortingGroup", gameObject);
+        Debug.LogWarning(transform.name + " LoadSortingGroup", gameObject);
     }
 
-    public virtual void ReloadModel() {
+    public virtual void ReloadModel()
+    {
         this.model = transform.Find("Model");
         this.spriteRender = this.model.GetComponent<SpriteRenderer>();
     }
@@ -66,5 +67,15 @@ public class BlockCtrl : SaiMonoBehaviour
     {
         this.sprite = sprite;
         this.spriteRender.sprite = sprite;
+    }
+
+    public virtual string Name()
+    {
+        return this.blockData.node.Name();
+    }
+
+    public virtual bool IsOccupied()
+    {
+        return this.blockData.node.occupied;
     }
 }
