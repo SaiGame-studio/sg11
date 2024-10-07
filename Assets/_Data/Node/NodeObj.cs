@@ -9,7 +9,7 @@ public class NodeObj : SaiMonoBehaviour
     public Color textColor = Color.red;
     public bool isShowText = false;
 
-    private void Update()
+    private void FixedUpdate()
     {
         this.ToogleNodeText();
     }
@@ -39,7 +39,6 @@ public class NodeObj : SaiMonoBehaviour
 
     protected virtual void ToogleNodeText()
     {
-        if (Input.GetKeyUp(KeyCode.F3)) this.isShowText = !this.isShowText;
-        this.text.gameObject.SetActive(this.isShowText);
+        this.text.gameObject.SetActive(InputManager.Instance.isDebug);
     }
 }

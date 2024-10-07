@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class LinesDrawer : SaiMonoBehaviour
 {
-    protected LineRenderer lineRenderer;
-    [SerializeField] protected float lineWidht = 0.1f;
+    [SerializeField] protected LineRenderer lineRenderer;
+    [SerializeField] protected float lineWidth = 0.1f;
 
     protected override void LoadComponents()
     {

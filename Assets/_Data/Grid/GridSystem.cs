@@ -8,11 +8,17 @@ public class GridSystem : GridAbstract
     public int width = 18;
     public int height = 11;
     public float offsetX = 0.2f;
+    public int blocksRemain = 0;
     public BlocksProfileSO blocksProfile;
     public List<Node> nodes;
     public List<BlockCtrl> blocks;
     public List<int> nodeIds;
     public List<Node> freeNodes = new List<Node>();
+
+    private void FixedUpdate()
+    {
+        this.BlockRemainCounting();
+    }
 
     protected override void LoadComponents()
     {
@@ -34,6 +40,7 @@ public class GridSystem : GridAbstract
         this.SpawnBlocks();
         this.FindNodesNeighbors();
         this.FindBlocksNeighbors();
+        this.ctrl.blockAuto.CheckNextBlock();
     }
 
     protected virtual void FindNodesNeighbors()
@@ -81,7 +88,7 @@ public class GridSystem : GridAbstract
         {
             for (int y = 0; y < this.height; y++)
             {
-                Node node = new Node
+                Node node = new()
                 {
                     x = x,
                     y = y,
@@ -155,7 +162,7 @@ public class GridSystem : GridAbstract
         this.freeNodes.Add(node);
         node.occupied = false;
         node.blockCtrl.spriteRender.sprite = null;
-        this.blocks.Remove(node.blockCtrl);
+        this.ctrl.blockHandler.UnchooseBlock(node.blockCtrl);
     }
 
     protected virtual Node GetRandomNode()
@@ -190,6 +197,21 @@ public class GridSystem : GridAbstract
     public virtual BlockCtrl GetRandomBlock()
     {
         int randIndex = Random.Range(0, this.blocks.Count);
-        return this.blocks[randIndex];
+        BlockCtrl blockCtrl = this.blocks[randIndex];
+
+        if (!blockCtrl.IsOccupied()) return this.GetRandomBlock();
+        return blockCtrl;
+    }
+
+    protected virtual int BlockRemainCounting()
+    {
+        int count = 0;
+        foreach (BlockCtrl blockCtrl in GridManagerCtrl.Instance.gridSystem.blocks)
+        {
+            if (blockCtrl.IsOccupied()) count++;
+        }
+
+        this.blocksRemain = count;
+        return count;
     }
 }

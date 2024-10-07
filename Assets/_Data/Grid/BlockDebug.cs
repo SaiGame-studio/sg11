@@ -17,14 +17,9 @@ public class BlockDebug : GridAbstract
         BlockDebug.instance = this;
     }
 
-    protected virtual void Update()
+    public virtual void DeleteFirstBlock()
     {
-        this.DeleteBlock();
-    }
-
-    protected virtual void DeleteBlock()
-    {
-        if (!Input.GetKey(KeyCode.Delete)) return;
+        if (!InputManager.Instance.isDebug) return;
         if (this.ctrl.blockHandler.firstBlock == null) return;
         BlockCtrl block = this.ctrl.blockHandler.firstBlock;
         this.ctrl.gridSystem.NodeFree(block.blockData.node);
@@ -46,7 +41,7 @@ public class BlockDebug : GridAbstract
 
     public virtual void ClearDebug()
     {
-        List<string> names = new List<string>();
+        List<string> names = new();
         names.Add(BlockSpawner.LINKER);
         names.Add(BlockSpawner.SCAN);
         names.Add(BlockSpawner.SCAN_STEP);
@@ -60,7 +55,7 @@ public class BlockDebug : GridAbstract
 
     public virtual void AutoPlay()
     {
-        GridManagerCtrl.Instance.blockAuto.ShowHint();
+        GridManagerCtrl.Instance.blockAuto.CheckNextBlock();
 
         Invoke(nameof(this.AutoClickBlocks), this.autoPlaySpeed);
     }
@@ -70,17 +65,16 @@ public class BlockDebug : GridAbstract
         BlockCtrl firstBlock = GridManagerCtrl.Instance.blockAuto.firstBlock;
         BlockCtrl secondBlock = GridManagerCtrl.Instance.blockAuto.secondBlock;
 
-        Debug.Log("==== AutoPlay ==============================");
-        Debug.Log("blockCtrl: " + firstBlock.blockData.node.Name(), firstBlock.gameObject);
-        Debug.Log("sameBlock: " + secondBlock.blockData.node.Name(), secondBlock.gameObject);
-
-        if (firstBlock.blockData.node.occupied == false
-            || secondBlock.blockData.node.occupied == false)
+        if (!this.IsBlocksMatching(firstBlock, secondBlock))
         {
             Debug.Log("== No more Move ==============");
+            CancelInvoke();
             return;
         }
 
+        //Debug.Log("==== AutoPlay ==============================");
+        //Debug.Log("blockCtrl: " + firstBlock.blockData.node.Name(), firstBlock.gameObject);
+        //Debug.Log("sameBlock: " + secondBlock.blockData.node.Name(), secondBlock.gameObject);
 
         GridManagerCtrl.Instance.blockHandler.SetNode(firstBlock);
         GridManagerCtrl.Instance.blockHandler.SetNode(secondBlock);
@@ -89,4 +83,14 @@ public class BlockDebug : GridAbstract
 
         if (this.continuePlay) Invoke(nameof(this.AutoPlay), this.autoPlaySpeed);
     }
+
+    protected virtual bool IsBlocksMatching(BlockCtrl firstBlock, BlockCtrl secondBlock)
+    {
+        if (firstBlock == null || secondBlock == null) return false;
+        if (firstBlock.blockID != secondBlock.blockID) return false;
+        if (!firstBlock.IsOccupied() || !secondBlock.IsOccupied()) return false;
+
+        return true;
+    }
+
 }
