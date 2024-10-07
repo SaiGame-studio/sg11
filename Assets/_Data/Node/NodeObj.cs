@@ -7,6 +7,12 @@ public class NodeObj : SaiMonoBehaviour
 {
     public TextMeshPro text;
     public Color textColor = Color.red;
+    public bool isShowText = false;
+
+    private void Update()
+    {
+        this.ToogleNodeText();
+    }
 
     protected override void LoadComponents()
     {
@@ -29,5 +35,11 @@ public class NodeObj : SaiMonoBehaviour
     public virtual void SetColor(Color color)
     {
         this.text.color = color;
+    }
+
+    protected virtual void ToogleNodeText()
+    {
+        if (Input.GetKeyUp(KeyCode.F3)) this.isShowText = !this.isShowText;
+        this.text.gameObject.SetActive(this.isShowText);
     }
 }

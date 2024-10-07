@@ -6,6 +6,6 @@ public class Level1 : LevelAbstract
 {
     public override void MoveBlocks()
     {
-        Debug.Log("No move");
+        //
     }
 }
