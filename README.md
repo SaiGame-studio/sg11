@@ -14,5 +14,7 @@
 - https://github.com/SaiGame-studio/sg11/issues/10
 - https://github.com/SaiGame-studio/sg11/issues/11
 
+DevLog: https://www.youtube.com/playlist?list=PL9YFzEkTXjbPhi8hdU6VyZCkpSlZUFSU7
+
 Download For Window:
 - From Discord: https://discord.com/channels/874863625007935539/1107894864705757295
