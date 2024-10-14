@@ -11,3 +11,7 @@
 
 Download For Window:
 - From Discord: https://discord.com/channels/874863625007935539/1107894864705757295
+
+Donate cho dự án:
+![image](https://github.com/user-attachments/assets/f62cb358-db02-4a51-8b38-188ed92f9199)
+Thanks
