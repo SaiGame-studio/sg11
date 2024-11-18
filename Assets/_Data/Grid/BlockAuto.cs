@@ -42,7 +42,10 @@ public class BlockAuto : GridAbstract
     {
         this.CheckNextBlock();
         this.hintBlock = this.firstBlock;
-        GameManager.Instance.UseHint();
+        if(hintBlock != null)
+        {
+            GameManager.Instance.UseHint();
+        }
         return this.hintBlock;
     }
 
