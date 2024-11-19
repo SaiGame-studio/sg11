@@ -3,6 +3,13 @@ using UnityEngine;
 public class InputManager : SaiSingleton<InputManager>
 {
     public bool isDebug = false;
+    public KonamiCodeChecker konamiCodeChecker {  get; private set; }
+
+    protected override void Start()
+    {
+        base.Start();
+        konamiCodeChecker = new KonamiCodeChecker();
+    }
 
     protected void Update()
     {
@@ -13,7 +20,40 @@ public class InputManager : SaiSingleton<InputManager>
 
     protected virtual void ToogleDebugMode()
     {
-        if (Input.GetKeyUp(KeyCode.F3)) this.isDebug = !this.isDebug;
+        if (Input.GetKeyUp(KeyCode.F3))
+        {
+            if (isDebug)
+            {
+                ActivateDebugMode(false);
+                return;
+            }
+            else if(konamiCodeChecker.IsCheckingKonamiCode())
+            {
+                konamiCodeChecker.SetCheckingKonamiCode(false);
+                konamiCodeChecker.Reset();
+            }
+            else
+            {
+                konamiCodeChecker.SetCheckingKonamiCode(true);
+            }
+
+        }
+
+        if (!konamiCodeChecker.IsCheckingKonamiCode()) return;
+
+        konamiCodeChecker.CheckInput();
+
+        if (konamiCodeChecker.IsCodeEntered)
+        {
+            ActivateDebugMode(true);
+            konamiCodeChecker.SetCheckingKonamiCode(false);
+            konamiCodeChecker.Reset();
+        }
+    }
+
+    private void ActivateDebugMode(bool active)
+    {
+        isDebug = active;
     }
 
     protected virtual void DeleteChooseBlock()
