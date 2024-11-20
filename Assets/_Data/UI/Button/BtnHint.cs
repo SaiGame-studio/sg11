@@ -10,12 +10,13 @@ public class BtnHint : BaseButton
     private void FixedUpdate()
     {
         this.ShowSpriteHint();
+        this.CheckHintAvailability();
     }
 
     protected override void OnClick()
     {
         BlockDebug.Instance.ClearDebug();
-        if (GameManager.Instance.RemainHint > 0) GridManagerCtrl.Instance.blockAuto.LoadHintBlock();
+        GridManagerCtrl.Instance.blockAuto.LoadHintBlock();
     }
 
     protected override void LoadComponents()
@@ -42,5 +43,16 @@ public class BtnHint : BaseButton
         }
 
         this.spriteHint.sprite = this.hintBlock.sprite;
+    }
+
+    private void CheckHintAvailability()
+    {
+        bool interactable = true;
+
+        if (!GridManagerCtrl.Instance.blockAuto.isNextBlockExist) interactable = false;
+        if (GridManagerCtrl.Instance.gridSystem.blocksRemain == 0) interactable = false;
+        if (GameManager.Instance.RemainHint <= 0) interactable = false;
+
+        this.button.interactable = interactable;
     }
 }
