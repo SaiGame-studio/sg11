@@ -7,11 +7,13 @@ public class UIShuffleButton : SaiMonoBehaviour
 {
     [SerializeField] protected Transform shuffleButton;
     [SerializeField] protected Button btnShuffle;
+    [SerializeField] protected Animator btnAnim;
 
     protected override void LoadComponents()
     {
         base.LoadComponents();
         this.LoadShuffleButton();
+        this.LoadButtonAnimator();
     }
 
     protected void FixedUpdate()
@@ -27,12 +29,30 @@ public class UIShuffleButton : SaiMonoBehaviour
         Debug.Log(transform.name + " LoadModel", gameObject);
     }
 
+    protected virtual void LoadButtonAnimator()
+    {
+        if (this.btnAnim != null) return;
+        if (this.shuffleButton == null) return;
+        this.btnAnim = this.shuffleButton.GetComponent<Animator>();
+        Debug.Log(transform.name + " LoadButtonAnimator", gameObject);
+    }
+
     protected virtual void ShuffleChecking()
     {
         bool interactable = true;
         if (GridManagerCtrl.Instance.blockAuto.isNextBlockExist) interactable = false;
         if (GridManagerCtrl.Instance.gridSystem.blocksRemain == 0) interactable = false;
         if (GameManager.Instance.RemainShuffle <= 0) interactable = false;
+
+        UpdateButtonState(interactable);
+    }
+
+    private void UpdateButtonState(bool interactable)
+    {
+        if (this.btnShuffle.interactable != interactable)
+        {
+            btnAnim.SetBool("EnablePulse", interactable);
+        }
         this.btnShuffle.interactable = interactable;
     }
 }

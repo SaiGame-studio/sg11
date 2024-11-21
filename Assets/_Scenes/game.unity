@@ -6530,6 +6530,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   shuffleButton: {fileID: 1969026192}
   btnShuffle: {fileID: 1969026194}
+  btnAnim: {fileID: 1969026197}
 --- !u!1001 &1734032910
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -6710,8 +6711,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1082004681
+  m_SortingLayer: 2
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7830,6 +7831,7 @@ GameObject:
   - component: {fileID: 1969026195}
   - component: {fileID: 1969026194}
   - component: {fileID: 1969026193}
+  - component: {fileID: 1969026197}
   m_Layer: 5
   m_Name: BtnShuffle
   m_TagString: Untagged
@@ -7953,6 +7955,27 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969026191}
   m_CullTransparentMesh: 1
+--- !u!95 &1969026197
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1969026191}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: d4a0b78aeb8165d47b91c0d030a08f13, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &1989166826
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -8150,6 +8173,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1377918618}
   - {fileID: 7623246152748186168}
   - {fileID: 430420652}
   - {fileID: 1734032911}
@@ -8158,7 +8182,6 @@ RectTransform:
   - {fileID: 907955605}
   - {fileID: 1723788427}
   - {fileID: 806755730}
-  - {fileID: 1377918618}
   m_Father: {fileID: 75237271}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
