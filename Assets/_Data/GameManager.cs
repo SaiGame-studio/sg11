@@ -1,4 +1,4 @@
-using com.cyborgAssets.inspectorButtonPro;
+﻿using com.cyborgAssets.inspectorButtonPro;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SaiSingleton<GameManager>
 {
+    private bool isGameEnded = false;
     [SerializeField] protected int maxLevel = 0;
     [SerializeField] protected int gameLevel = 1;
     [SerializeField] protected int remainShuffle = 9;
@@ -20,6 +21,11 @@ public class GameManager : SaiSingleton<GameManager>
     {
         base.Start();
         this.LoadMaxLevel();
+    }
+
+    protected virtual void Update()
+    {
+        CheckGameStatus();
     }
 
     [ProButton]
@@ -45,5 +51,24 @@ public class GameManager : SaiSingleton<GameManager>
     {
         this.remainShuffle--;
         if (this.remainShuffle < 0) this.remainShuffle = 0;
+    }
+
+    protected virtual void CheckGameStatus()
+    {
+        if (isGameEnded) return;
+
+        int blocksRemain = GridManagerCtrl.Instance.gridSystem.blocksRemain;
+
+        if (blocksRemain <= 0)
+        {
+            HandleWin();
+        }
+    }
+
+    protected virtual void HandleWin()
+    {
+        isGameEnded = true;
+
+        SoundManager.Instance.PlaySound(SoundManager.Sound.win);
     }
 }

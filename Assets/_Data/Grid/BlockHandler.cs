@@ -18,6 +18,7 @@ public class BlockHandler : GridAbstract
             this.ctrl.pathfinding.DataReset();
             this.firstBlock = blockCtrl;
             this.ChooseBlock(blockCtrl);
+            SoundManager.Instance.PlaySound(SoundManager.Sound.click);
             return;
         }
 
@@ -36,13 +37,18 @@ public class BlockHandler : GridAbstract
             isPathFound = this.ctrl.pathfinding.FindPath(this.firstBlock, this.secondBlock);
             if (isPathFound)
             {
+                SoundManager.Instance.PlaySound(SoundManager.Sound.linked);
                 this.LinkNodes();
                 this.ctrl.blockAuto.ClearBlocks();
             }
 
         }
 
-        if(!isPathFound) Invoke(nameof(this.Unchoose),0.5f);
+        if(!isPathFound)
+        {
+            Invoke(nameof(this.Unchoose), 0.5f);
+            SoundManager.Instance.PlaySound(SoundManager.Sound.oho);
+        }
     }
 
     protected virtual void ChooseBlock(BlockCtrl blockCtrl)
