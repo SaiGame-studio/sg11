@@ -52,6 +52,7 @@ public class UIShuffleButton : SaiMonoBehaviour
         if (this.btnShuffle.interactable != interactable)
         {
             btnAnim.SetBool("EnablePulse", interactable);
+            if (interactable) SoundManager.Instance.PlaySound(SoundManager.Sound.no_move);
         }
         this.btnShuffle.interactable = interactable;
     }
