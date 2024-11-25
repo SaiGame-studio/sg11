@@ -3,7 +3,7 @@ using UnityEngine;
 public class InputManager : SaiSingleton<InputManager>
 {
     public bool isDebug = false;
-    public KonamiCodeChecker konamiCodeChecker {  get; private set; }
+    public KonamiCodeChecker konamiCodeChecker { get; private set; }
 
     protected override void Start()
     {
@@ -14,6 +14,7 @@ public class InputManager : SaiSingleton<InputManager>
     protected void Update()
     {
         this.ToogleDebugMode();
+        this.CheckingKonamiInput();
         this.ClearChooseBlock();
         this.DeleteChooseBlock();
     }
@@ -27,7 +28,7 @@ public class InputManager : SaiSingleton<InputManager>
                 ActivateDebugMode(false);
                 return;
             }
-            else if(konamiCodeChecker.IsCheckingKonamiCode())
+            else if (konamiCodeChecker.IsCheckingKonamiCode())
             {
                 konamiCodeChecker.SetCheckingKonamiCode(false);
                 konamiCodeChecker.Reset();
@@ -38,17 +39,25 @@ public class InputManager : SaiSingleton<InputManager>
             }
 
         }
+    }
 
+    private void CheckingKonamiInput()
+    {
         if (!konamiCodeChecker.IsCheckingKonamiCode()) return;
 
         konamiCodeChecker.CheckInput();
 
-        if (konamiCodeChecker.IsCodeEntered)
-        {
-            ActivateDebugMode(true);
-            konamiCodeChecker.SetCheckingKonamiCode(false);
-            konamiCodeChecker.Reset();
-        }
+        if (!konamiCodeChecker.IsCodeEntered) return;
+
+        ActivateDebugMode(true);
+        konamiCodeChecker.SetCheckingKonamiCode(false);
+        konamiCodeChecker.Reset();
+
+        // Start countdown shuffle
+        if (CountdownShuffleCtrl.Instance == null) return;
+        if (CountdownShuffleCtrl.Instance.IsCountingDown()) return;
+
+        CountdownShuffleCtrl.Instance.SetShouldCountingDown();
     }
 
     private void ActivateDebugMode(bool active)
