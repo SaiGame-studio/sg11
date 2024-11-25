@@ -1,4 +1,5 @@
 ﻿using com.cyborgAssets.inspectorButtonPro;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,9 @@ public class GameManager : SaiSingleton<GameManager>
     public int RemainHint => remainHint;
 
     public int CurrentLevel => gameLevel;
+
+    // Event
+    public event Action OnGameOver;
 
     protected override void Start()
     {
@@ -63,6 +67,16 @@ public class GameManager : SaiSingleton<GameManager>
         {
             HandleWin();
         }
+
+        if(remainShuffle <= 0)
+        {
+            HandleGameOver();
+        }
+    }
+
+    private void HandleGameOver()
+    {
+        OnGameOver?.Invoke();
     }
 
     protected virtual void HandleWin()
@@ -70,5 +84,14 @@ public class GameManager : SaiSingleton<GameManager>
         isGameEnded = true;
 
         SoundManager.Instance.PlaySound(SoundManager.Sound.win);
+    }
+
+    public void ResetGameOverState()
+    {
+        isGameEnded = false;
+        gameLevel = 1;
+        remainShuffle = 9;
+        remainHint = 9;
+        this.LoadMaxLevel();
     }
 }
