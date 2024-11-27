@@ -10,20 +10,16 @@ public class UIGameOver : SaiMonoBehaviour
     protected override void Start()
     {
         base.Start();
-        if (GameManager.Instance != null)
-        {
-            GameManager.Instance.OnGameOver += GameManager_OnGameOver;
-        }
-        else
-        {
-            Debug.LogError("GameManager.Instance is null. Cannot subscribe to OnGameOver.");
-        }
+        GameManager.Instance.OnGameOver += GameManager_OnGameOver;
     }
 
     protected override void OnDisable()
     {
         base.OnDisable();
-        GameManager.Instance.OnGameOver -= GameManager_OnGameOver;
+        if (GameManager.Instance != null)
+        {
+            GameManager.Instance.OnGameOver -= GameManager_OnGameOver;
+        }
     }
 
     private void GameManager_OnGameOver()

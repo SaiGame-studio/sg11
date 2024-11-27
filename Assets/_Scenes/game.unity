@@ -3594,8 +3594,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLevel: 0
-  gameLevel: 4
-  remainShuffle: 1
+  gameLevel: 1
+  remainShuffle: 2
   remainHint: 9
 --- !u!4 &996634965
 Transform:

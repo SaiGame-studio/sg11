@@ -7,7 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class GameManager : SaiSingleton<GameManager>
 {
-    private bool isGameEnded = false;
+    private bool isWin = false;
+    private bool isLoss = false;
     [SerializeField] protected int maxLevel = 0;
     [SerializeField] protected int gameLevel = 1;
     [SerializeField] protected int remainShuffle = 9;
@@ -24,11 +25,12 @@ public class GameManager : SaiSingleton<GameManager>
     protected override void Start()
     {
         base.Start();
-        this.LoadMaxLevel();
+        this.InitializeData();
     }
 
     protected virtual void Update()
     {
+        CheckWinStatus();
         CheckGameStatus();
     }
 
@@ -57,18 +59,26 @@ public class GameManager : SaiSingleton<GameManager>
         if (this.remainShuffle < 0) this.remainShuffle = 0;
     }
 
+    #region Game State Handlers
+
+    private void CheckWinStatus()
+    {
+        if (GridManagerCtrl.Instance.gridSystem.blocksRemain > 0)
+        {
+            isWin = false;
+        }
+    }
+
     protected virtual void CheckGameStatus()
     {
-        if (isGameEnded) return;
-
         int blocksRemain = GridManagerCtrl.Instance.gridSystem.blocksRemain;
 
-        if (blocksRemain <= 0)
+        if (blocksRemain <= 0 && isWin == false)
         {
             HandleWin();
         }
 
-        if(remainShuffle <= 0)
+        else if(remainShuffle <= 0 && !GridManagerCtrl.Instance.blockAuto.isNextBlockExist && isLoss == false)
         {
             HandleGameOver();
         }
@@ -76,22 +86,54 @@ public class GameManager : SaiSingleton<GameManager>
 
     private void HandleGameOver()
     {
+        isLoss = true;
+
         OnGameOver?.Invoke();
+        SoundManager.Instance.PlaySound(SoundManager.Sound.no_move);
     }
 
     protected virtual void HandleWin()
     {
-        isGameEnded = true;
+        isWin = true;
 
         SoundManager.Instance.PlaySound(SoundManager.Sound.win);
     }
 
+    #endregion
+
     public void ResetGameOverState()
     {
-        isGameEnded = false;
         gameLevel = 1;
         remainShuffle = 9;
         remainHint = 9;
+
+        // Clear all event listeners
+        OnGameOver = null;
+
+        this.InitializeData();
+    }
+
+    private void InitializeData()
+    {
         this.LoadMaxLevel();
+        isLoss = false;
+        isWin = false;
+    }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        SceneManager.sceneUnloaded += OnSceneUnloaded;
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        SceneManager.sceneUnloaded -= OnSceneUnloaded;
+    }
+
+    private void OnSceneUnloaded(Scene scene)
+    {
+        OnGameOver = null; // Clear event listeners
     }
 }
