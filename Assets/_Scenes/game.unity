@@ -8774,7 +8774,7 @@ MonoBehaviour:
   foreground: {fileID: 30479969}
   linearHolder: {fileID: 42590424}
   timeRemaining: 0
-  maxTimer: 10
+  maxTimer: 300
 --- !u!1 &1935178484
 GameObject:
   m_ObjectHideFlags: 0
