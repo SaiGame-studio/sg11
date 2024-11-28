@@ -9,6 +9,8 @@ public class GameManager : SaiSingleton<GameManager>
 {
     private bool isWin = false;
     private bool isLoss = false;
+    private bool isCountdownShuffle = false;
+
     [SerializeField] protected int maxLevel = 0;
     [SerializeField] protected int gameLevel = 1;
     [SerializeField] protected int remainShuffle = 9;
@@ -32,6 +34,18 @@ public class GameManager : SaiSingleton<GameManager>
     {
         CheckWinStatus();
         CheckGameStatus();
+        CheckShouldCountdownShuffle();
+    }
+
+    private void CheckShouldCountdownShuffle()
+    {
+        if (isCountdownShuffle) return;
+        if (!InputManager.Instance.isDebug) return;
+        if (CountdownShuffleCtrl.Instance == null) return;
+        if (CountdownShuffleCtrl.Instance.IsCountingDown()) return;
+
+        CountdownShuffleCtrl.Instance.SetShouldCountingDown();
+        isCountdownShuffle = true;
     }
 
     [ProButton]
@@ -78,9 +92,10 @@ public class GameManager : SaiSingleton<GameManager>
             HandleWin();
         }
 
-        else if(remainShuffle <= 0 && !GridManagerCtrl.Instance.blockAuto.isNextBlockExist && isLoss == false)
+        if(remainShuffle <= 0 && !GridManagerCtrl.Instance.blockAuto.isNextBlockExist && isLoss == false && blocksRemain > 0)
         {
             HandleGameOver();
+            Debug.Log("blog remain: " + blocksRemain);
         }
     }
 
@@ -118,6 +133,7 @@ public class GameManager : SaiSingleton<GameManager>
         this.LoadMaxLevel();
         isLoss = false;
         isWin = false;
+        isCountdownShuffle = false;
     }
 
     protected override void OnEnable()
