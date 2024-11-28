@@ -1,13 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BtnAudioToggle : BaseButton
 {
     [SerializeField] private Sprite soundOnIcon;
     [SerializeField] private Sprite soundOffIcon;
 
-    [SerializeField] private SpriteRenderer btnIcon;
+    [SerializeField] private Image btnIcon;
 
     protected override void OnClick()
     {
@@ -35,7 +36,7 @@ public class BtnAudioToggle : BaseButton
     private void LoadButtonIcon()
     {
         if (this.btnIcon != null) return;
-        btnIcon = GetComponentInChildren<SpriteRenderer>();
+        btnIcon = transform.Find("Icon").GetComponent<Image>();
         Debug.Log(transform.name + " LoadButtonIcon", gameObject);
     }
 }
