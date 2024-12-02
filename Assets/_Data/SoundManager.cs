@@ -11,6 +11,7 @@ public class SoundManager : SaiSingleton<SoundManager>
         no_move,
         oho,
         win,
+        finish,
     }
 
     private AudioSource audioSource;

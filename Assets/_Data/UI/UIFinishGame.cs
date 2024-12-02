@@ -16,6 +16,7 @@ public class UIFinishGame : SaiMonoBehaviour
     private void GameManager_OnFinishGame()
     {
         ShowUI();
+        SoundManager.Instance.PlaySound(SoundManager.Sound.finish);
     }
 
     protected override void LoadComponents()
