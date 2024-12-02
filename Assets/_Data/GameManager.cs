@@ -21,6 +21,7 @@ public class GameManager : SaiSingleton<GameManager>
 
     // Event
     public event Action OnGameOver;
+    public event Action OnFinishGame;
 
     protected override void Start()
     {
@@ -96,6 +97,11 @@ public class GameManager : SaiSingleton<GameManager>
     {
         isWin = true;
 
+        if(gameLevel == maxLevel)
+        {
+            OnFinishGame?.Invoke();
+            return;
+        }
         SoundManager.Instance.PlaySound(SoundManager.Sound.win);
     }
 
