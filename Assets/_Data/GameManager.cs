@@ -23,6 +23,7 @@ public class GameManager : SaiSingleton<GameManager>
 
     // Event
     public event Action OnGameOver;
+    public event Action OnFinishGame;
 
     protected override void Start()
     {
@@ -95,7 +96,6 @@ public class GameManager : SaiSingleton<GameManager>
         if(remainShuffle <= 0 && !GridManagerCtrl.Instance.blockAuto.isNextBlockExist && isLoss == false && blocksRemain > 0)
         {
             HandleGameOver();
-            Debug.Log("blog remain: " + blocksRemain);
         }
     }
 
@@ -110,6 +110,12 @@ public class GameManager : SaiSingleton<GameManager>
     protected virtual void HandleWin()
     {
         isWin = true;
+
+        if (gameLevel == maxLevel)
+        {
+            OnFinishGame?.Invoke();
+            return;
+        }
 
         SoundManager.Instance.PlaySound(SoundManager.Sound.win);
     }

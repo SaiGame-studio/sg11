@@ -72,4 +72,9 @@ public class InputManager : SaiSingleton<InputManager>
             BlockDebug.Instance.ClearDebug();
         }
     }
+
+    public void ActiveDebugMode(bool active)
+    {
+        this.isDebug = active;
+    }
 }
