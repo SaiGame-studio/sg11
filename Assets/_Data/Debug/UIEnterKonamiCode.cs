@@ -5,8 +5,7 @@ using UnityEngine;
 
 public class UIEnterKonamiCode : SaiMonoBehaviour
 {
-    [SerializeField] protected GameObject background;
-    [SerializeField] protected TextMeshProUGUI title;
+    [SerializeField] protected GameObject container;
     [SerializeField] protected TextMeshProUGUI konamiCode;
 
     protected void FixedUpdate()
@@ -23,23 +22,15 @@ public class UIEnterKonamiCode : SaiMonoBehaviour
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadBackground();
-        this.LoadTitle();
+        this.LoadContainer();
         this.LoadKonamiCode();
     }
 
-    protected virtual void LoadBackground()
+    protected virtual void LoadContainer()
     {
-        if (this.background != null) return;
-        this.background = transform.Find("Background").gameObject;
-        Debug.Log(transform.name + " LoadBackground", gameObject);
-    }
-
-    protected virtual void LoadTitle()
-    {
-        if (this.title != null) return;
-        this.title = transform.Find("Title").GetComponent<TextMeshProUGUI>();
-        Debug.Log(transform.name + " LoadTitle", gameObject);
+        if (this.container != null) return;
+        this.container = transform.Find("Container").gameObject;
+        Debug.Log(transform.name + " LoadContainer", gameObject);
     }
 
     protected virtual void LoadKonamiCode()
@@ -51,8 +42,7 @@ public class UIEnterKonamiCode : SaiMonoBehaviour
 
     private void ActivateUI(bool active)
     {
-        this.background.SetActive(active);
-        this.title.gameObject.SetActive(active);
+        this.container.SetActive(active);
         this.konamiCode.gameObject.SetActive(active);
     }
 }
