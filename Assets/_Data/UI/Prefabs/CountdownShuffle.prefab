@@ -239,4 +239,4 @@ MonoBehaviour:
   foreground: {fileID: 949464547827468354}
   linearHolder: {fileID: 6274537150697246059}
   timeRemaining: 0
-  maxTimer: 20
+  maxTimer: 300
