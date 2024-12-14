@@ -74,6 +74,11 @@ public class GameManager : SaiSingleton<GameManager>
         if (this.remainShuffle < 0) this.remainShuffle = 0;
     }
 
+    public void AddMoreHint(int hintNum)
+    {
+        this.remainHint += hintNum;
+    }
+
     #region Game State Handlers
 
     private void CheckWinStatus()
