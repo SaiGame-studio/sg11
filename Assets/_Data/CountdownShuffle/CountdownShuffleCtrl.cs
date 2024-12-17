@@ -21,6 +21,12 @@ public class CountdownShuffleCtrl : SaiMonoBehaviour
         CountdownShuffleCtrl.instance = this;
     }
 
+    protected override void Reset()
+    {
+        base.Reset();
+        maxTimer = 300;
+    }
+
     protected override void LoadComponents()
     {
         base.LoadComponents();
