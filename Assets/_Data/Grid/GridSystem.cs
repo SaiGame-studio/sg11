@@ -54,6 +54,10 @@ public class GridSystem : GridAbstract
             node.right = this.GetNodeByXY(x + 1, y);
             node.down = this.GetNodeByXY(x, y - 1);
             node.left = this.GetNodeByXY(x - 1, y);
+            node.topLeft = this.GetNodeByXY(x - 1, y + 1);
+            node.topRight = this.GetNodeByXY(x + 1, y + 1);
+            node.bottomRight = this.GetNodeByXY(x + 1, y - 1);
+            node.bottomLeft = this.GetNodeByXY(x - 1, y - 1);
         }
     }
 
@@ -76,6 +80,10 @@ public class GridSystem : GridAbstract
             node.blockCtrl.neighbors.Add(node.right.blockCtrl);
             node.blockCtrl.neighbors.Add(node.down.blockCtrl);
             node.blockCtrl.neighbors.Add(node.left.blockCtrl);
+            node.blockCtrl.neighbors.Add(node.topLeft.blockCtrl);
+            node.blockCtrl.neighbors.Add(node.topRight.blockCtrl);
+            node.blockCtrl.neighbors.Add(node.bottomRight.blockCtrl);
+            node.blockCtrl.neighbors.Add(node.bottomLeft.blockCtrl);
         }
     }
 

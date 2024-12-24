@@ -17,6 +17,10 @@ public class Node
     public Node right;
     public Node down;
     public Node left;
+    public Node topLeft;
+    public Node topRight;
+    public Node bottomRight;
+    public Node bottomLeft;
     public NodeObj nodeObj;
     public BlockCtrl blockCtrl;
 

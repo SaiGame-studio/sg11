@@ -38,6 +38,7 @@ public abstract class LevelAbstract : SaiMonoBehaviour
             BlockCtrl blockCtrl = node.blockCtrl;
             if (blockCtrl == null) continue;
             int neighbordId = this.GetNeighbordId(node, levelCode);
+            if (neighbordId == -1) continue;
             upperBlock = blockCtrl.neighbors[neighbordId];
             if (upperBlock == null || upperBlock.blockData.node.occupied) continue;
             if (!node.occupied && !upperBlock.blockData.node.occupied) continue;
@@ -60,16 +61,89 @@ public abstract class LevelAbstract : SaiMonoBehaviour
             case LevelCodeName.level5:
                 return 3;
             case LevelCodeName.level6:
-                //TODO: you can do it
-                //From node check how to go in
-                return 3;
+                return GetDirectionTowards(node, Direction.TopLeft);
             case LevelCodeName.level7:
-                //TODO: you can do it
-                //From node check how to go out
-                return 3;
+                return GetDirectionTowards(node, Direction.TopRight);
+            case LevelCodeName.level8:
+                return GetDirectionTowards(node, Direction.BottomRight);
+            case LevelCodeName.level9:
+                return GetDirectionTowards(node, Direction.BottomLeft);
             case LevelCodeName.level1:
             default:
                 return 0;
         }
+    }
+
+    private enum Direction
+    {
+        BottomRight,
+        BottomLeft,
+        TopRight,
+        TopLeft,
+        Center
+    }
+
+    private int GetDirectionTowards(Node node, Direction direction)
+    {
+        Node targetNeighbor = null;
+
+        switch (direction)
+        {
+            case Direction.BottomRight:
+                targetNeighbor = GetBottomRightNeighbor(node);
+                break;
+            case Direction.BottomLeft:
+                targetNeighbor = GetBottomLeftNeighbor(node);
+                break;
+            case Direction.TopRight:
+                targetNeighbor = GetTopRightNeighbor(node);
+                break;
+            case Direction.TopLeft:
+                targetNeighbor = GetTopLeftNeighbor(node);
+                break;
+        }
+
+        if (targetNeighbor == node.up) return 0;
+        if (targetNeighbor == node.right) return 1;
+        if (targetNeighbor == node.down) return 2;
+        if (targetNeighbor == node.left) return 3;
+        if (targetNeighbor == node.topLeft) return 4;
+        if (targetNeighbor == node.topRight) return 5;
+        if (targetNeighbor == node.bottomRight) return 6;
+        if (targetNeighbor == node.bottomLeft) return 7;
+
+        return -1;
+    }
+
+    private Node GetBottomRightNeighbor(Node node)
+    {
+        if (node.bottomRight != null && !node.bottomRight.occupied && node.occupied && node.bottomRight.blockCtrl) return node.bottomRight;
+        if (node.down != null && !node.down.occupied && node.occupied && node.down.blockCtrl) return node.down;
+        if (node.right != null && !node.right.occupied && node.occupied && node.right.blockCtrl) return node.right;
+        return null;
+    }
+
+    private Node GetBottomLeftNeighbor(Node node)
+    {
+        if (node.bottomLeft != null && !node.bottomLeft.occupied && node.occupied && node.bottomLeft.blockCtrl) return node.bottomLeft;
+        if (node.down != null && !node.down.occupied && node.occupied && node.down.blockCtrl) return node.down;
+        if (node.left != null && !node.left.occupied && node.occupied && node.left.blockCtrl) return node.left;
+        return null;
+    }
+
+    private Node GetTopRightNeighbor(Node node)
+    {
+        if (node.topRight != null && !node.topRight.occupied && node.topRight.blockCtrl && node.occupied) return node.topRight;
+        if (node.up != null && !node.up.occupied && node.occupied && node.up.blockCtrl) return node.up;
+        if (node.right != null && !node.right.occupied && node.occupied && node.right.blockCtrl) return node.right;
+        return null;
+    }
+
+    private Node GetTopLeftNeighbor(Node node)
+    {
+        if (node.topLeft != null && !node.topLeft.occupied && node.topLeft.blockCtrl && node.occupied) return node.topLeft;
+        if (node.up != null && !node.up.occupied && node.occupied && node.up.blockCtrl) return node.up;
+        if (node.left != null && !node.left.occupied && node.occupied && node.left.blockCtrl) return node.left;
+        return null;
     }
 }
