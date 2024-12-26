@@ -13,4 +13,6 @@ public enum LevelCodeName
    level7 = 7,
    level8 = 8,
    level9 = 9,
+   level10 = 10,
+   level11 = 11,
 }

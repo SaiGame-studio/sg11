@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -68,6 +68,10 @@ public abstract class LevelAbstract : SaiMonoBehaviour
                 return GetDirectionTowards(node, Direction.BottomRight);
             case LevelCodeName.level9:
                 return GetDirectionTowards(node, Direction.BottomLeft);
+            case LevelCodeName.level10:
+                return GetDirectionTowards(node, Direction.Center);
+            case LevelCodeName.level11:
+                return GetDirectionTowardsHalfGrid(node);
             case LevelCodeName.level1:
             default:
                 return 0;
@@ -100,6 +104,9 @@ public abstract class LevelAbstract : SaiMonoBehaviour
                 break;
             case Direction.TopLeft:
                 targetNeighbor = GetTopLeftNeighbor(node);
+                break;
+            case Direction.Center:
+                targetNeighbor = GetCenterNeighbor(node);
                 break;
         }
 
@@ -146,4 +153,126 @@ public abstract class LevelAbstract : SaiMonoBehaviour
         if (node.left != null && !node.left.occupied && node.occupied && node.left.blockCtrl) return node.left;
         return null;
     }
+
+    private int GetDirectionTowardsHalfGrid(Node node)
+    {
+        int centerX = gridCtrl.gridSystem.width / 2;
+
+        if (node.x < centerX)
+        {
+            // Toward Left
+            return 3;
+        }
+        else
+        {
+            // Toward Right
+            return 1;
+        }
+    }
+
+    private Vector2 GetGridCenter()
+    {
+        // Calculate center based on grid dimensions
+        float centerX = (gridCtrl.gridSystem.width + 1) * (1 - gridCtrl.gridSystem.offsetX) / 2f;
+        float centerY = (gridCtrl.gridSystem.height - 1) / 2f;
+        return new Vector2(centerX, centerY);
+    }
+
+    private Node GetCenterNeighbor(Node node)
+    {
+        if (!node.occupied) return null;
+
+        Vector2 centerPos = GetGridCenter();
+        Vector2 nodePos = new Vector2(node.x, node.y);
+
+        // Lấy phần tư
+        bool isAboveCenter = node.y > centerPos.y;
+        bool isRightOfCenter = node.x > centerPos.x;
+
+        // Check các node lân cận theo thứ tự ưu tiên 
+        List<Node> priorityNeighbors = new List<Node>();
+
+        if (isAboveCenter && isRightOfCenter) // Góc phần tư trên phải
+        {
+            Node priorityNode = GetBottomLeftNeighbor(node);
+            if (priorityNode != null) priorityNeighbors.Add(priorityNode);
+        }
+        else if (isAboveCenter && !isRightOfCenter) // Góc phần tư trên trái
+        {
+            Node priorityNode = GetBottomRightNeighbor(node);
+            if (priorityNode != null) priorityNeighbors.Add(priorityNode);
+        }
+        else if (!isAboveCenter && isRightOfCenter) // Góc phần tư dưới phải
+        {
+            Node priorityNode = GetTopLeftNeighbor(node);
+            if (priorityNode != null) priorityNeighbors.Add(priorityNode);
+        }
+        else // Góc phần tư dưới trái
+        {
+            Node priorityNode = GetTopRightNeighbor(node);
+            if (priorityNode != null) priorityNeighbors.Add(priorityNode);
+        }
+
+        // Kiểm tra xem có node lân cận nào gần center hơn không
+        foreach (Node neighbor in priorityNeighbors)
+        {
+            Vector2 neighborPos = new Vector2(neighbor.x, neighbor.y);
+
+            if (Vector2.Distance(neighborPos, centerPos) < Vector2.Distance(nodePos, centerPos))
+            {
+                bool hasNearbyBlocks = CheckNearbyBlocks(neighbor);
+                if (hasNearbyBlocks) return neighbor;
+            }
+        }
+
+        foreach (Node neighbor in priorityNeighbors)
+        {
+            if (HasEmptySpaceNearby(neighbor)) return neighbor;
+        }
+
+        return null;
+    }
+
+    private bool CheckNearbyBlocks(Node node)
+    {
+        // Kiểm tra xem có ít nhất một block lân cận không
+        if (node.up != null && node.up.occupied) return true;
+        if (node.down != null && node.down.occupied) return true;
+        if (node.left != null && node.left.occupied) return true;
+        if (node.right != null && node.right.occupied) return true;
+        if (node.topLeft != null && node.topLeft.occupied) return true;
+        if (node.topRight != null && node.topRight.occupied) return true;
+        if (node.bottomLeft != null && node.bottomLeft.occupied) return true;
+        if (node.bottomRight != null && node.bottomRight.occupied) return true;
+
+        return false;
+    }
+
+    private bool HasEmptySpaceNearby(Node node)
+    {
+        int emptyCount = 0;
+        int occupiedCount = 0;
+
+        void CheckNode(Node n)
+        {
+            if (n != null)
+            {
+                if (n.occupied) occupiedCount++;
+                else if (n.blockCtrl != null) emptyCount++;
+            }
+        }
+
+        CheckNode(node.up);
+        CheckNode(node.down);
+        CheckNode(node.left);
+        CheckNode(node.right);
+        CheckNode(node.topLeft);
+        CheckNode(node.topRight);
+        CheckNode(node.bottomLeft);
+        CheckNode(node.bottomRight);
+
+        // Nếu có nhiều node trống hơn node có block, ưu tiên lấp chỗ trống
+        return emptyCount > occupiedCount;
+    }
+
 }
