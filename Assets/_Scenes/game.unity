@@ -7859,7 +7859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLevel: 0
-  gameLevel: 11
+  gameLevel: 1
   remainShuffle: 9
   remainHint: 9
 --- !u!4 &996634965
@@ -13552,10 +13552,6 @@ PrefabInstance:
     - target: {fileID: 3144933411462898149, guid: ecb1ad0eebd2afd4e9fb56e1f79b3152, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7756947749063849742, guid: ecb1ad0eebd2afd4e9fb56e1f79b3152, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: -50.299988
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
