@@ -5,8 +5,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GameState
+{
+    MainMenu,
+    Playing,
+    Paused,
+    GameOver,
+    Victory
+}
+
 public class GameManager : SaiSingleton<GameManager>
 {
+    private GameState currentState;
+    public GameState CurrentState => currentState;
+
+    #region Game Logic Variables
     private bool isWin = false;
     private bool isLoss = false;
     private bool isCountdownShuffle = false;
@@ -20,18 +33,81 @@ public class GameManager : SaiSingleton<GameManager>
     public int RemainHint => remainHint;
 
     public int CurrentLevel => gameLevel;
+    #endregion
 
     // Event
     public event Action OnGameOver;
     public event Action OnFinishGame;
+    public event Action<GameState> OnGameStateChanged;
 
     protected override void Start()
     {
         base.Start();
-        this.InitializeData();
+        SetInitialState();
     }
 
+    #region Game State Handlers
+    private void SetInitialState()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        ChangeState(currentSceneName.ToLower().Contains("mainmenu") ? GameState.MainMenu : GameState.Playing);
+    }
+
+    public void ChangeState(GameState newState)
+    {
+        if (currentState == newState) return;
+
+        ExitCurrentState();
+        currentState = newState;
+        EnterNewState();
+
+        OnGameStateChanged?.Invoke(currentState);
+    }
+
+    private void ExitCurrentState()
+    {
+        switch (currentState)
+        {
+            case GameState.Playing:
+                // Clean up any ongoing game processes
+                break;
+            case GameState.Paused:
+                Time.timeScale = 1f;
+                break;
+        }
+    }
+
+    private void EnterNewState()
+    {
+        switch (currentState)
+        {
+            case GameState.MainMenu:
+                //ResetGameData();
+                break;
+            case GameState.Playing:
+                this.InitializeData();
+                break;
+            case GameState.Paused:
+                Time.timeScale = 0f;
+                break;
+            case GameState.GameOver:
+                HandleGameOver();
+                break;
+            case GameState.Victory:
+                HandleVictory();
+                break;
+        }
+    }
+    #endregion
+
     protected virtual void Update()
+    {
+        if (currentState != GameState.Playing) return;
+
+        UpdateGameplay();
+    }
+
+    private void UpdateGameplay()
     {
         CheckWinStatus();
         CheckGameStatus();
@@ -83,6 +159,8 @@ public class GameManager : SaiSingleton<GameManager>
 
     private void CheckWinStatus()
     {
+        if (GridManagerCtrl.Instance?.gridSystem == null) return;
+
         if (GridManagerCtrl.Instance.gridSystem.blocksRemain > 0)
         {
             isWin = false;
@@ -91,38 +169,37 @@ public class GameManager : SaiSingleton<GameManager>
 
     protected virtual void CheckGameStatus()
     {
-        int blocksRemain = GridManagerCtrl.Instance.gridSystem.blocksRemain;
+        if (GridManagerCtrl.Instance?.gridSystem == null) return;
 
-        if (blocksRemain <= 0 && isWin == false)
+        int blocksRemain = GridManagerCtrl.Instance.gridSystem.blocksRemain;
+        bool noMovesLeft = remainShuffle <= 0 && !GridManagerCtrl.Instance.blockAuto.isNextBlockExist;
+
+        if (blocksRemain == 0 && isWin == false)
         {
-            HandleWin();
+            ChangeState(GameState.Victory);
         }
 
-        if(remainShuffle <= 0 && !GridManagerCtrl.Instance.blockAuto.isNextBlockExist && isLoss == false && blocksRemain > 0)
+        if (noMovesLeft && blocksRemain > 0 && isLoss == false)
         {
-            HandleGameOver();
+            ChangeState(GameState.GameOver);
         }
     }
 
     private void HandleGameOver()
     {
-        isLoss = true;
-
         OnGameOver?.Invoke();
-        SoundManager.Instance.PlaySound(SoundManager.Sound.no_move);
+        SoundManager.Instance?.PlaySound(SoundManager.Sound.no_move);
     }
 
-    protected virtual void HandleWin()
+    private void HandleVictory()
     {
-        isWin = true;
-
         if (gameLevel == maxLevel)
         {
             OnFinishGame?.Invoke();
             return;
         }
 
-        SoundManager.Instance.PlaySound(SoundManager.Sound.win);
+        SoundManager.Instance?.PlaySound(SoundManager.Sound.win);
     }
 
     #endregion
