@@ -85,7 +85,7 @@ public class GameManager : SaiSingleton<GameManager>
                 //ResetGameData();
                 break;
             case GameState.Playing:
-                this.InitializeData();
+                //StartCoroutine(WaitForGameSceneLoad());
                 break;
             case GameState.Paused:
                 Time.timeScale = 0f;
@@ -100,7 +100,22 @@ public class GameManager : SaiSingleton<GameManager>
     }
     #endregion
 
-    protected virtual void Update()
+    private IEnumerator WaitForGameSceneLoad()
+    {
+        SceneManager.LoadScene("game");
+
+        yield return null;
+
+        while (GridManagerCtrl.Instance == null || GridManagerCtrl.Instance.gridSystem.blocksRemain == 0)
+        {
+            yield return null;
+        }
+
+        InitializeData();
+        this.ChangeState(GameState.Playing);
+    }
+
+    protected virtual void FixedUpdate()
     {
         if (currentState != GameState.Playing) return;
 
@@ -130,7 +145,7 @@ public class GameManager : SaiSingleton<GameManager>
     {
         this.gameLevel++;
         if (this.gameLevel > this.maxLevel) this.gameLevel = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine("WaitForGameSceneLoad");
     }
 
     protected virtual void LoadMaxLevel()
