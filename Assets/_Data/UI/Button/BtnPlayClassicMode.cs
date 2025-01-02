@@ -6,6 +6,6 @@ public class BtnPlayClassicMode : BaseButton
 {
     protected override void OnClick()
     {
-        Debug.Log("BtnPlayClassicMode:OnClick");
+        GameManager.Instance.StartNewGame();
     }
 }

@@ -5,10 +5,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
+public enum GameState
+{
+    MainMenu,
+    Playing,
+    GameOver,
+    Victory
+}
+
 public class GameManager : SaiSingleton<GameManager>
 {
-    private bool isWin = false;
-    private bool isLoss = false;
+    private GameState currentState;
+    public GameState CurrentState => currentState;
+
+    #region Game Logic Variables
     private bool isCountdownShuffle = false;
 
     [SerializeField] protected int maxLevel = 0;
@@ -20,22 +30,105 @@ public class GameManager : SaiSingleton<GameManager>
     public int RemainHint => remainHint;
 
     public int CurrentLevel => gameLevel;
+    #endregion
 
     // Event
     public event Action OnGameOver;
     public event Action OnFinishGame;
+    public event Action<GameState> OnGameStateChanged;
 
     protected override void Start()
     {
         base.Start();
-        this.InitializeData();
+        SetInitialState();
     }
 
-    protected virtual void Update()
+    protected virtual void FixedUpdate()
     {
-        CheckWinStatus();
+        if (currentState != GameState.Playing) return;
+
+        UpdateGameplay();
+    }
+
+    private void UpdateGameplay()
+    {
         CheckGameStatus();
         CheckShouldCountdownShuffle();
+    }
+
+    #region Game State Handlers
+    private void SetInitialState()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        if (currentSceneName.ToLower().Contains("mainmenu"))
+        {
+            ChangeState(GameState.MainMenu);
+        }
+        else
+        {
+            this.StartNewGame();
+        }
+    }
+
+    public void ChangeState(GameState newState)
+    {
+        if (currentState == newState) return;
+
+        ExitCurrentState();
+        currentState = newState;
+        EnterNewState();
+
+        OnGameStateChanged?.Invoke(currentState);
+    }
+
+    private void ExitCurrentState()
+    {
+        switch (currentState)
+        {
+            case GameState.Playing:
+                // Clean up any ongoing game processes
+                break;
+        }
+    }
+
+    private void EnterNewState()
+    {
+        switch (currentState)
+        {
+            case GameState.MainMenu:
+                //ResetGameData();
+                break;
+            case GameState.Playing:
+                //StartCoroutine(WaitForGameSceneLoad());
+                break;
+            case GameState.GameOver:
+                HandleGameOver();
+                break;
+            case GameState.Victory:
+                HandleVictory();
+                break;
+        }
+    }
+    #endregion
+
+    public void StartNewGame()
+    {
+        StartCoroutine(WaitForGameSceneLoad());
+    }
+
+    private IEnumerator WaitForGameSceneLoad()
+    {
+        SceneManager.LoadScene("game");
+
+        yield return null;
+
+        while (GridManagerCtrl.Instance == null || GridManagerCtrl.Instance.gridSystem.blocksRemain == 0)
+        {
+            yield return null;
+        }
+
+        InitializeData();
+        this.ChangeState(GameState.Playing);
     }
 
     private void CheckShouldCountdownShuffle()
@@ -54,7 +147,7 @@ public class GameManager : SaiSingleton<GameManager>
     {
         this.gameLevel++;
         if (this.gameLevel > this.maxLevel) this.gameLevel = 1;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        StartCoroutine(WaitForGameSceneLoad());
     }
 
     protected virtual void LoadMaxLevel()
@@ -81,48 +174,39 @@ public class GameManager : SaiSingleton<GameManager>
 
     #region Game State Handlers
 
-    private void CheckWinStatus()
-    {
-        if (GridManagerCtrl.Instance.gridSystem.blocksRemain > 0)
-        {
-            isWin = false;
-        }
-    }
-
     protected virtual void CheckGameStatus()
     {
-        int blocksRemain = GridManagerCtrl.Instance.gridSystem.blocksRemain;
+        if (GridManagerCtrl.Instance?.gridSystem == null) return;
 
-        if (blocksRemain <= 0 && isWin == false)
+        int blocksRemain = GridManagerCtrl.Instance.gridSystem.blocksRemain;
+        bool noMovesLeft = remainShuffle <= 0 && !GridManagerCtrl.Instance.blockAuto.isNextBlockExist;
+
+        if (blocksRemain == 0)
         {
-            HandleWin();
+            ChangeState(GameState.Victory);
         }
 
-        if(remainShuffle <= 0 && !GridManagerCtrl.Instance.blockAuto.isNextBlockExist && isLoss == false && blocksRemain > 0)
+        else if (noMovesLeft && blocksRemain > 0)
         {
-            HandleGameOver();
+            ChangeState(GameState.GameOver);
         }
     }
 
     private void HandleGameOver()
     {
-        isLoss = true;
-
         OnGameOver?.Invoke();
-        SoundManager.Instance.PlaySound(SoundManager.Sound.no_move);
+        SoundManager.Instance?.PlaySound(SoundManager.Sound.no_move);
     }
 
-    protected virtual void HandleWin()
+    private void HandleVictory()
     {
-        isWin = true;
-
         if (gameLevel == maxLevel)
         {
             OnFinishGame?.Invoke();
             return;
         }
 
-        SoundManager.Instance.PlaySound(SoundManager.Sound.win);
+        SoundManager.Instance?.PlaySound(SoundManager.Sound.win);
     }
 
     #endregion
@@ -135,15 +219,12 @@ public class GameManager : SaiSingleton<GameManager>
 
         // Clear all event listeners
         OnGameOver = null;
-
-        this.InitializeData();
+        OnFinishGame = null;
     }
 
     private void InitializeData()
     {
         this.LoadMaxLevel();
-        isLoss = false;
-        isWin = false;
         isCountdownShuffle = false;
     }
 
@@ -161,6 +242,7 @@ public class GameManager : SaiSingleton<GameManager>
 
     private void OnSceneUnloaded(Scene scene)
     {
-        OnGameOver = null; // Clear event listeners
+        OnGameOver = null;
+        OnFinishGame = null;
     }
 }
