@@ -8,6 +8,6 @@ public class BtnRestartGame : BaseButton
     protected override void OnClick()
     {
         GameManager.Instance.ResetGameOverState();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameManager.Instance.StartNewGame();
     }
 }

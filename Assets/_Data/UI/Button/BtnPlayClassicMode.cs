@@ -6,6 +6,6 @@ public class BtnPlayClassicMode : BaseButton
 {
     protected override void OnClick()
     {
-        GameManager.Instance.StartCoroutine("WaitForGameSceneLoad");
+        GameManager.Instance.StartNewGame();
     }
 }

@@ -468,7 +468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10046a7c58312674898a8c9c10f57d34, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  isDebug: 0
+  isDebug: 1
 --- !u!1 &75237270
 GameObject:
   m_ObjectHideFlags: 0
@@ -7859,7 +7859,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxLevel: 0
-  gameLevel: 1
+  gameLevel: 11
   remainShuffle: 9
   remainHint: 9
 --- !u!4 &996634965

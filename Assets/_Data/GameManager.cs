@@ -9,7 +9,6 @@ public enum GameState
 {
     MainMenu,
     Playing,
-    Paused,
     GameOver,
     Victory
 }
@@ -50,7 +49,14 @@ public class GameManager : SaiSingleton<GameManager>
     private void SetInitialState()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
-        ChangeState(currentSceneName.ToLower().Contains("mainmenu") ? GameState.MainMenu : GameState.Playing);
+        if (currentSceneName.ToLower().Contains("mainmenu"))
+        {
+            ChangeState(GameState.MainMenu);
+        }
+        else
+        {
+            this.StartNewGame();
+        }
     }
 
     public void ChangeState(GameState newState)
@@ -71,9 +77,6 @@ public class GameManager : SaiSingleton<GameManager>
             case GameState.Playing:
                 // Clean up any ongoing game processes
                 break;
-            case GameState.Paused:
-                Time.timeScale = 1f;
-                break;
         }
     }
 
@@ -87,9 +90,6 @@ public class GameManager : SaiSingleton<GameManager>
             case GameState.Playing:
                 //StartCoroutine(WaitForGameSceneLoad());
                 break;
-            case GameState.Paused:
-                Time.timeScale = 0f;
-                break;
             case GameState.GameOver:
                 HandleGameOver();
                 break;
@@ -99,6 +99,11 @@ public class GameManager : SaiSingleton<GameManager>
         }
     }
     #endregion
+
+    public void StartNewGame()
+    {
+        StartCoroutine(WaitForGameSceneLoad());
+    }
 
     private IEnumerator WaitForGameSceneLoad()
     {
@@ -145,7 +150,7 @@ public class GameManager : SaiSingleton<GameManager>
     {
         this.gameLevel++;
         if (this.gameLevel > this.maxLevel) this.gameLevel = 1;
-        StartCoroutine("WaitForGameSceneLoad");
+        StartCoroutine(WaitForGameSceneLoad());
     }
 
     protected virtual void LoadMaxLevel()
@@ -227,8 +232,7 @@ public class GameManager : SaiSingleton<GameManager>
 
         // Clear all event listeners
         OnGameOver = null;
-
-        this.InitializeData();
+        OnFinishGame = null;
     }
 
     private void InitializeData()
@@ -253,6 +257,7 @@ public class GameManager : SaiSingleton<GameManager>
 
     private void OnSceneUnloaded(Scene scene)
     {
-        OnGameOver = null; // Clear event listeners
+        OnGameOver = null;
+        OnFinishGame = null;
     }
 }
