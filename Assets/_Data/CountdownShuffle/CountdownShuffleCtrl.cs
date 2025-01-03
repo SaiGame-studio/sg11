@@ -51,17 +51,11 @@ public class CountdownShuffleCtrl : SaiMonoBehaviour
     protected override void Start()
     {
         base.Start();
-        GameManager.Instance.OnFinishGame += GameManager_OnFinishGame;
         timeRemaining = maxTimer;
         if (InputManager.Instance.isDebug)
         {
             isCountingDown = true;
         }
-    }
-
-    private void GameManager_OnFinishGame()
-    {
-        this.gameObject.SetActive(false);
     }
 
     protected virtual void Update()
@@ -71,7 +65,10 @@ public class CountdownShuffleCtrl : SaiMonoBehaviour
 
     private void CountdownShuffle()
     {
+        if (GameManager.Instance.CurrentState != GameState.Playing) return;
+
         if (!isCountingDown) return;
+
         ShowingUI(true);
 
         if (GameManager.Instance.RemainShuffle <= 0) timeRemaining = maxTimer;
