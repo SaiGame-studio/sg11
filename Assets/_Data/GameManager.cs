@@ -13,10 +13,19 @@ public enum GameState
     Victory
 }
 
+public enum GameMode
+{
+    Classic,
+    Full
+}
+
 public class GameManager : SaiSingleton<GameManager>
 {
     private GameState currentState;
     public GameState CurrentState => currentState;
+
+    private GameMode currentMode;
+    public GameMode CurrentMode => currentMode;
 
     #region Game Logic Variables
     private bool isCountdownShuffle = false;
@@ -146,6 +155,19 @@ public class GameManager : SaiSingleton<GameManager>
     public virtual void NextLevel()
     {
         this.gameLevel++;
+
+        if (currentMode == GameMode.Classic && this.gameLevel == 6)
+        {
+            // Convert from 6 to 10 for classic mode
+            this.gameLevel = 10;
+        }
+
+        if(currentMode == GameMode.Full)
+        {
+            AddMoreHint(2);
+            AddMoreShuffle(2);
+        }
+
         if (this.gameLevel > this.maxLevel) this.gameLevel = 1;
         StartCoroutine(WaitForGameSceneLoad());
     }
@@ -170,6 +192,26 @@ public class GameManager : SaiSingleton<GameManager>
     public void AddMoreHint(int hintNum)
     {
         this.remainHint += hintNum;
+
+        if (this.remainHint > 9)
+        {
+            this.remainHint = 9;
+        }
+    }
+
+    public void AddMoreShuffle(int shuffleNum)
+    {
+        this.remainShuffle += shuffleNum;
+
+        if (this.remainShuffle > 9)
+        {
+            this.remainShuffle = 9;
+        }
+    }
+
+    public void SetGameMode(GameMode mode)
+    {
+        this.currentMode = mode;
     }
 
     #region Game State Handlers
@@ -213,9 +255,18 @@ public class GameManager : SaiSingleton<GameManager>
 
     public void ResetGameOverState()
     {
+        if(currentMode == GameMode.Classic)
+        {
+            remainShuffle = 9;
+            remainHint = 9;
+        }
+
+        if(currentMode == GameMode.Full)
+        {
+            remainShuffle = 7;
+            remainHint = 7;
+        }
         gameLevel = 1;
-        remainShuffle = 9;
-        remainHint = 9;
 
         // Clear all event listeners
         OnGameOver = null;
@@ -228,6 +279,7 @@ public class GameManager : SaiSingleton<GameManager>
         isCountdownShuffle = false;
     }
 
+    #region event registration
     protected override void OnEnable()
     {
         base.OnEnable();
@@ -245,4 +297,5 @@ public class GameManager : SaiSingleton<GameManager>
         OnGameOver = null;
         OnFinishGame = null;
     }
+    #endregion
 }

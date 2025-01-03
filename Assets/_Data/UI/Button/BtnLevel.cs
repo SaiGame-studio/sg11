@@ -8,6 +8,8 @@ public class BtnLevel : BaseButton
     [SerializeField] protected TextMeshProUGUI text;
     [SerializeField] protected int level = 0;
 
+    public int Level => level;
+
     protected override void Start()
     {
         base.Start();
