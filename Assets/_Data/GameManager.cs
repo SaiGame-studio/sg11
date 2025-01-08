@@ -59,14 +59,14 @@ public class GameManager : SaiSingleton<GameManager>
         UpdateGameplay();
     }
 
-    private void UpdateGameplay()
+    protected virtual void UpdateGameplay()
     {
         CheckGameStatus();
         CheckShouldCountdownShuffle();
     }
 
     #region Game State Handlers
-    private void SetInitialState()
+    protected virtual void SetInitialState()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
         if (currentSceneName.ToLower().Contains("mainmenu"))
@@ -79,7 +79,7 @@ public class GameManager : SaiSingleton<GameManager>
         }
     }
 
-    public void ChangeState(GameState newState)
+    public virtual void ChangeState(GameState newState)
     {
         if (currentState == newState) return;
 
@@ -90,7 +90,7 @@ public class GameManager : SaiSingleton<GameManager>
         OnGameStateChanged?.Invoke(currentState);
     }
 
-    private void ExitCurrentState()
+    protected virtual void ExitCurrentState()
     {
         switch (currentState)
         {
@@ -100,7 +100,7 @@ public class GameManager : SaiSingleton<GameManager>
         }
     }
 
-    private void EnterNewState()
+    protected virtual void EnterNewState()
     {
         switch (currentState)
         {
@@ -120,12 +120,12 @@ public class GameManager : SaiSingleton<GameManager>
     }
     #endregion
 
-    public void StartNewGame()
+    public virtual void StartNewGame()
     {
         StartCoroutine(WaitForGameSceneLoad());
     }
 
-    private IEnumerator WaitForGameSceneLoad()
+    protected virtual IEnumerator WaitForGameSceneLoad()
     {
         SceneManager.LoadScene("game");
 
@@ -140,7 +140,7 @@ public class GameManager : SaiSingleton<GameManager>
         this.ChangeState(GameState.Playing);
     }
 
-    private void CheckShouldCountdownShuffle()
+    protected virtual void CheckShouldCountdownShuffle()
     {
         if (isCountdownShuffle) return;
         if (!InputManager.Instance.isDebug) return;
@@ -189,7 +189,7 @@ public class GameManager : SaiSingleton<GameManager>
         if (this.remainShuffle < 0) this.remainShuffle = 0;
     }
 
-    public void AddMoreHint(int hintNum)
+    public virtual void AddMoreHint(int hintNum)
     {
         this.remainHint += hintNum;
 
@@ -199,7 +199,7 @@ public class GameManager : SaiSingleton<GameManager>
         }
     }
 
-    public void AddMoreShuffle(int shuffleNum)
+    public virtual void AddMoreShuffle(int shuffleNum)
     {
         this.remainShuffle += shuffleNum;
 
@@ -209,7 +209,7 @@ public class GameManager : SaiSingleton<GameManager>
         }
     }
 
-    public void SetGameMode(GameMode mode)
+    public virtual void SetGameMode(GameMode mode)
     {
         this.currentMode = mode;
     }
@@ -234,13 +234,13 @@ public class GameManager : SaiSingleton<GameManager>
         }
     }
 
-    private void HandleGameOver()
+    protected virtual void HandleGameOver()
     {
         OnGameOver?.Invoke();
         SoundManager.Instance?.PlaySound(SoundManager.Sound.no_move);
     }
 
-    private void HandleVictory()
+    protected virtual void HandleVictory()
     {
         if (gameLevel == maxLevel)
         {
@@ -253,7 +253,7 @@ public class GameManager : SaiSingleton<GameManager>
 
     #endregion
 
-    public void ResetGameOverState()
+    public virtual void ResetGameOverState()
     {
         if(currentMode == GameMode.Classic)
         {
@@ -273,7 +273,7 @@ public class GameManager : SaiSingleton<GameManager>
         OnFinishGame = null;
     }
 
-    private void InitializeData()
+    protected virtual void InitializeData()
     {
         this.LoadMaxLevel();
         isCountdownShuffle = false;
@@ -292,7 +292,7 @@ public class GameManager : SaiSingleton<GameManager>
         SceneManager.sceneUnloaded -= OnSceneUnloaded;
     }
 
-    private void OnSceneUnloaded(Scene scene)
+    protected virtual void OnSceneUnloaded(Scene scene)
     {
         OnGameOver = null;
         OnFinishGame = null;
