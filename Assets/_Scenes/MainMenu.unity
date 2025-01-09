@@ -375,6 +375,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 113325373}
+  - component: {fileID: 113325374}
   m_Layer: 5
   m_Name: MainMenuPanel
   m_TagString: Untagged
@@ -405,6 +406,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &113325374
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 113325372}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ad4993a2443058d40a4d250ac1ac5f66, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &194727947
 GameObject:
   m_ObjectHideFlags: 0
@@ -4040,6 +4053,7 @@ GameObject:
   - component: {fileID: 1993809993}
   - component: {fileID: 1993809992}
   - component: {fileID: 1993809991}
+  - component: {fileID: 1993809995}
   m_Layer: 5
   m_Name: CanvasMainMenu
   m_TagString: Untagged
@@ -4132,6 +4146,22 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
+--- !u!114 &1993809995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1993809990}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cfd702fd041fde4fb87313ffd6fd19b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pages:
+  - {fileID: 113325374}
+  currentPage: 0
+  defaultPage: 0
 --- !u!1001 &2058618775
 PrefabInstance:
   m_ObjectHideFlags: 0
