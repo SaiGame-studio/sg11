@@ -22,7 +22,7 @@ public class BtnLogin : BaseButton
     private void LoadPhotonLogin()
     {
         if (this.photonLogin != null) return;
-        this.photonLogin = transform.GetComponentInParent<PhotonLogin>();
+        this.photonLogin = FindObjectOfType<PhotonLogin>(true);
         Debug.LogWarning(transform.name + " LoadPhotonLogin", gameObject);
     }
 }

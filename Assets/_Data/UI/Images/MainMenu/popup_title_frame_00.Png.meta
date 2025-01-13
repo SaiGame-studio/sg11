@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 1b15a352d8ad64af49cacb2bde37cd85
+guid: 02ab72d5275a04cbeb24a66542e31aec
 TextureImporter:
   internalIDToNameTable:
   - first:
       213: 21300000
-    second: status_bg_common_0
+    second: common_popup_title_00_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -82,7 +82,7 @@ TextureImporter:
     overridden: 0
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
@@ -95,7 +95,7 @@ TextureImporter:
     overridden: 0
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
@@ -108,26 +108,26 @@ TextureImporter:
     overridden: 0
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: status_bg_common_0
+      name: common_popup_title_00_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 216
-        height: 98
+        width: 239
+        height: 107
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 107, y: 47, z: 106, w: 51}
+      border: {x: 126, y: 0, z: 113, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ef1f6223e0d9b4d0eb1f0a538ad36482
+      spriteID: 11b7418c0affc4563a80994ca4102ae4
       internalID: 21300000
       vertices: []
       indices: 
@@ -136,7 +136,7 @@ TextureImporter:
     outline: []
     physicsShape: []
     bones: []
-    spriteID: eb75fadc82ab44230929720978af454e
+    spriteID: bebe38d625a8448169a1e2b2d98ba13a
     internalID: 0
     vertices: []
     indices: 
@@ -144,7 +144,7 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      status_bg_common_0: 21300000
+      common_popup_title_00_0: 21300000
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

@@ -1,60 +1,67 @@
 using Photon.Pun;
+using Photon.Realtime;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PhotonLogin : SaiMonoBehaviour
+public class PhotonLogin : SaiMonoBehaviourPunCallbacks
 {
-    [SerializeField] protected TMP_InputField inputUsername;
-    [SerializeField] protected TMP_Text warningText; 
-    [SerializeField] protected Button btnLogin;
+    [SerializeField] protected int pageLobbyIndex;
+    [SerializeField] protected UILoginPanel loginPanel;
 
     public virtual void Login()
     {
-        string name = inputUsername.text;
+        string name = loginPanel.inputUsername.text;
 
-        if (string.IsNullOrEmpty(name))
-        {
-            warningText.gameObject.SetActive(true);
-            return;
-        }
-        warningText.gameObject.SetActive(false);
-
-        Debug.Log(transform.name + ": Login " + name);
+        if (!IsValidName(name)) return; 
+        
+        loginPanel.warningText.gameObject.SetActive(false);
+        loginPanel.inputUsername.text = "";
 
         PhotonNetwork.LocalPlayer.NickName = name;
         PhotonNetwork.ConnectUsingSettings();
     }
 
+    protected virtual bool IsValidName(string name)
+    {
+        if (string.IsNullOrEmpty(name))
+        {
+            loginPanel.warningText.text = "Name cannot be empty!";
+            loginPanel.warningText.gameObject.SetActive(true);
+            return false;
+        }
+        return true;
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        PhotonNetwork.JoinLobby();
+    }
+
+    public override void OnJoinedLobby()
+    {
+        UIManager.Instance.GoToPage(pageLobbyIndex);
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        UIManager.Instance.GoToPage(pageLobbyIndex - 1);
+    }
+
     protected override void LoadComponents()
     {
         base.LoadComponents();
-        this.LoadInputUsername();
-        this.LoadWarningText();
-        this.LoadBtnLogin();
+        this.LoadUILoginPanel();
     }
 
-    private void LoadWarningText()
+    private void LoadUILoginPanel()
     {
-        if (this.warningText != null) return;
-        this.warningText = transform.Find("WarningText")?.GetComponent<TMP_Text>();
-        Debug.LogWarning(transform.name + " LoadWarningText", gameObject);
-    }
-
-    private void LoadInputUsername()
-    {
-        if (this.inputUsername != null) return;
-        this.inputUsername = transform.GetComponentInChildren<TMP_InputField>();
-        Debug.LogWarning(transform.name + " LoadInputUsername", gameObject);
-    }
-
-    private void LoadBtnLogin()
-    {
-        if (this.btnLogin != null) return;
-        this.btnLogin = transform.GetComponentInChildren<Button>();
-        Debug.LogWarning(transform.name + " LoadBtnLogin", gameObject);
+        if (this.loginPanel != null) return;
+        this.loginPanel = FindObjectOfType<UILoginPanel>(true);
+        Debug.LogWarning(transform.name + " LoadUILoginPanel", gameObject);
     }
 }
