@@ -21,11 +21,14 @@ public enum GameMode
 
 public class GameManager : SaiSingleton<GameManager>
 {
-    private GameState currentState;
+    protected GameState currentState;
     public GameState CurrentState => currentState;
 
-    private GameMode currentMode;
+    protected GameMode currentMode;
     public GameMode CurrentMode => currentMode;
+
+    protected GameModeData modeData = new GameModeData();
+    public GameModeData ModeData => modeData;
 
     #region Game Logic Variables
     private bool isCountdownShuffle = false;
@@ -164,8 +167,8 @@ public class GameManager : SaiSingleton<GameManager>
 
         if(currentMode == GameMode.Full)
         {
-            AddMoreHint(2);
-            AddMoreShuffle(2);
+            AddMoreHint(modeData.hintEachLevel);
+            AddMoreShuffle(modeData.shuffleEachLevel);
         }
 
         if (this.gameLevel > this.maxLevel) this.gameLevel = 1;
@@ -192,21 +195,11 @@ public class GameManager : SaiSingleton<GameManager>
     public virtual void AddMoreHint(int hintNum)
     {
         this.remainHint += hintNum;
-
-        if (this.remainHint > 9)
-        {
-            this.remainHint = 9;
-        }
     }
 
     public virtual void AddMoreShuffle(int shuffleNum)
     {
         this.remainShuffle += shuffleNum;
-
-        if (this.remainShuffle > 9)
-        {
-            this.remainShuffle = 9;
-        }
     }
 
     public virtual void SetGameMode(GameMode mode)
@@ -257,14 +250,14 @@ public class GameManager : SaiSingleton<GameManager>
     {
         if(currentMode == GameMode.Classic)
         {
-            remainShuffle = 9;
-            remainHint = 9;
+            remainShuffle = modeData.shuffleClassic;
+            remainHint = modeData.hintClassic;
         }
 
         if(currentMode == GameMode.Full)
         {
-            remainShuffle = 7;
-            remainHint = 7;
+            remainShuffle = modeData.shuffleFull;
+            remainHint = modeData.hintFull;
         }
         gameLevel = 1;
 

@@ -249,7 +249,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1515,6 +1515,7 @@ GameObject:
   - component: {fileID: 713648299}
   - component: {fileID: 713648301}
   - component: {fileID: 713648300}
+  - component: {fileID: 713648302}
   m_Layer: 5
   m_Name: LevelTxt
   m_TagString: Untagged
@@ -1594,7 +1595,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1638,6 +1639,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 713648298}
   m_CullTransparentMesh: 1
+--- !u!114 &713648302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 713648298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e4fd20df0a939c4995a04f8a81d4874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 713648300}
+  gameMode: 0
 --- !u!1 &762852912
 GameObject:
   m_ObjectHideFlags: 0
@@ -3094,7 +3109,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3601,6 +3616,7 @@ GameObject:
   - component: {fileID: 1873988005}
   - component: {fileID: 1873988007}
   - component: {fileID: 1873988006}
+  - component: {fileID: 1873988008}
   m_Layer: 5
   m_Name: LevelTxt
   m_TagString: Untagged
@@ -3680,7 +3696,7 @@ MonoBehaviour:
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
-  m_fontStyle: 1
+  m_fontStyle: 0
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -3724,6 +3740,20 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1873988004}
   m_CullTransparentMesh: 1
+--- !u!114 &1873988008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1873988004}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e4fd20df0a939c4995a04f8a81d4874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  text: {fileID: 1873988006}
+  gameMode: 1
 --- !u!1 &1906364907
 GameObject:
   m_ObjectHideFlags: 0
