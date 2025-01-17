@@ -12018,7 +12018,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -43, y: 13.7}
+  m_AnchoredPosition: {x: -41.5, y: 19.6}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1858383347
@@ -13773,6 +13773,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIEnterKonamiCode
       objectReference: {fileID: 0}
+    - target: {fileID: 816209612535397193, guid: ecb1ad0eebd2afd4e9fb56e1f79b3152, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3144933411462898149, guid: ecb1ad0eebd2afd4e9fb56e1f79b3152, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -13851,6 +13855,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3144933411462898149, guid: ecb1ad0eebd2afd4e9fb56e1f79b3152, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7216623371430052368, guid: ecb1ad0eebd2afd4e9fb56e1f79b3152, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -14061,6 +14069,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8090884078003775616, guid: 626f8d07fed31e04ca00157a185328e1, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14127,9 +14139,69 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 786136578}
     m_Modifications:
+    - target: {fileID: 2412719444529142590, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9f50362e3fa90440b8caef63181d40de, type: 3}
+    - target: {fileID: 2412719444529142590, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412719444529142590, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412719444529142590, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2412719444529142590, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 2
+      objectReference: {fileID: 0}
     - target: {fileID: 4519555713680914228, guid: 495927a21de08b044b26a95d03883008, type: 3}
       propertyPath: m_Name
       value: UIFinishGame
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737889385757263930, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 9f50362e3fa90440b8caef63181d40de, type: 3}
+    - target: {fileID: 4737889385757263930, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_Color.b
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737889385757263930, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737889385757263930, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4737889385757263930, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_PixelsPerUnitMultiplier
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821681601372031296, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -63.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4821681601372031296, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 28.8
+      objectReference: {fileID: 0}
+    - target: {fileID: 5396280609958550210, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026965244445638399, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -103.20001
+      objectReference: {fileID: 0}
+    - target: {fileID: 6026965244445638399, guid: 495927a21de08b044b26a95d03883008, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 28.800003
       objectReference: {fileID: 0}
     - target: {fileID: 7348149529248574003, guid: 495927a21de08b044b26a95d03883008, type: 3}
       propertyPath: m_Pivot.x
@@ -14215,7 +14287,9 @@ PrefabInstance:
       propertyPath: winFx
       value: 
       objectReference: {fileID: 282018575}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 1295080949538517342, guid: 495927a21de08b044b26a95d03883008, type: 3}
+    - {fileID: 6119291219633285369, guid: 495927a21de08b044b26a95d03883008, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
