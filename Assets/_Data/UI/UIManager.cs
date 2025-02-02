@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -28,7 +29,12 @@ public class UIManager : SaiMonoBehaviour
     private void LoadUIPages()
     {
         if (this.pages.Count > 0) return;
-        this.pages = new List<UIPage>(transform.GetComponentsInChildren<UIPage>());
+        foreach (Transform child in transform)
+        {
+            UIPage page = child.GetComponent<UIPage>();
+            if (page == null) continue;
+            this.pages.Add(page);
+        }
         Debug.LogWarning(transform.name + " LoadUIPages", gameObject);
     }
 
