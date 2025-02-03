@@ -80,6 +80,7 @@ public class PhotonRoom : SaiMonoBehaviourPunCallbacks
         {
             UIRoomProfile uiRoomProfile = Instantiate(this.roomPrefab);
             uiRoomProfile.SetRoomProfile(roomProfile);
+            uiRoomProfile.SetPhotonRoom(this);
             uiRoomProfile.transform.SetParent(this.roomContent, false);
         }
     }
@@ -98,5 +99,10 @@ public class PhotonRoom : SaiMonoBehaviourPunCallbacks
             if (roomProfile.name == name) return roomProfile;
         }
         return null;
+    }
+
+    public virtual void SetRoomInput(string roomName)
+    {
+        this.input.text = roomName;
     }
 }
