@@ -66,15 +66,18 @@ public class BlockAuto : GridAbstract
     public virtual void ShuffleBlocks()
     {
         BlockCtrl randomBlock;
-
-        foreach (BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
+        do
         {
-            if (!blockCtrl.IsOccupied()) continue;
-            randomBlock = this.ctrl.gridSystem.GetRandomBlock();
-            if (randomBlock.name == blockCtrl.name) continue;
-            this.SwapBlocks(blockCtrl, randomBlock);
-        }
-        this.CheckNextBlock();
+            foreach (BlockCtrl blockCtrl in this.ctrl.gridSystem.blocks)
+            {
+                if (!blockCtrl.IsOccupied()) continue;
+                randomBlock = this.ctrl.gridSystem.GetRandomBlock();
+                if (randomBlock.name == blockCtrl.name) continue;
+                this.SwapBlocks(blockCtrl, randomBlock);
+            }
+            this.CheckNextBlock();
+        } while (!isNextBlockExist);
+        
         GameManager.Instance.UseShuffle();
     }
 
