@@ -16,6 +16,7 @@ public class PhotonLogin : SaiMonoBehaviourPunCallbacks
         loginPanel.warningText.gameObject.SetActive(false);
         loginPanel.inputUsername.text = "";
 
+        PhotonNetwork.AutomaticallySyncScene = true;
         PhotonNetwork.LocalPlayer.NickName = name;
         PhotonNetwork.ConnectUsingSettings();
     }
