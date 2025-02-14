@@ -2,7 +2,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class RoomController : SaiMonoBehaviour
+public class LobbyUIManager : SaiMonoBehaviour
 {
     [SerializeField] protected TMP_InputField input;
     [SerializeField] protected Button createRoomBtn;

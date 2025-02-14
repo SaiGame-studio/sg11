@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class UIPlayerItem : SaiMonoBehaviourPunCallbacks
 {
     [SerializeField] protected PlayerProfile playerProfile;
-    private bool isReady = false;
+    protected bool isReady = false;
     public Player player;
 
     [Header("UI Components")]
@@ -32,8 +32,6 @@ public class UIPlayerItem : SaiMonoBehaviourPunCallbacks
 
     public void UpdateReadyState()
     {
-        //if(player.IsMasterClient) return;
-
         if (player.CustomProperties.TryGetValue("isReady", out object readyState))
         {
             isReady = (bool)readyState;
@@ -41,11 +39,19 @@ public class UIPlayerItem : SaiMonoBehaviourPunCallbacks
         UpdateReadyIndicator();
     }
 
-    public virtual void ApplyLocalChange(Button _readyBtn, Button _cancelBtn)
+    public virtual void SetUpForMasterClient()
+    {
+        this.readyIndicator.gameObject.SetActive(false);
+        this.stateImage.gameObject.SetActive(false);
+        this.masterPlayerImage.gameObject.SetActive(true);
+    }
+
+    public virtual void ApplyLocalPlayerSetup(Button _readyBtn, Button _cancelBtn)
     {
         this.background.color = this.highlightColor;
         this.readyButton = _readyBtn;
         this.cancelButton = _cancelBtn;
+
         if (player.IsMasterClient)
         {
             masterPlayerImage.gameObject.SetActive(true);
@@ -89,6 +95,16 @@ public class UIPlayerItem : SaiMonoBehaviourPunCallbacks
 
         readyButton.gameObject.SetActive(!isReady);
         cancelButton.gameObject.SetActive(isReady);
+    }
+
+    public override void OnLeftRoom()
+    {
+        ExitGames.Client.Photon.Hashtable props = new ExitGames.Client.Photon.Hashtable
+        {
+            { "isReady", false }
+        };
+        PhotonNetwork.LocalPlayer.SetCustomProperties(props);
+        Debug.Log("On Left Room");
     }
 
     #region Components Loading

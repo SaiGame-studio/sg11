@@ -20,6 +20,12 @@ public class UIManager : SaiMonoBehaviour
         UIManager.instance = this;
     }
 
+    protected override void Start()
+    {
+        base.Start();
+        GoToPage(defaultPage);
+    }
+
     protected override void LoadComponents()
     {
         base.LoadComponents();

@@ -7,29 +7,11 @@ public class PhotonLogin : SaiMonoBehaviourPunCallbacks
     [SerializeField] protected int pageLobbyIndex;
     [SerializeField] protected UILoginPanel loginPanel;
 
-    public virtual void Login()
+    public virtual void Connect(string username)
     {
-        string name = loginPanel.inputUsername.text;
-
-        if (!IsValidName(name)) return;
-
-        loginPanel.warningText.gameObject.SetActive(false);
-        loginPanel.inputUsername.text = "";
-
         PhotonNetwork.AutomaticallySyncScene = true;
-        PhotonNetwork.LocalPlayer.NickName = name;
+        PhotonNetwork.LocalPlayer.NickName = username;
         PhotonNetwork.ConnectUsingSettings();
-    }
-
-    protected virtual bool IsValidName(string name)
-    {
-        if (string.IsNullOrEmpty(name))
-        {
-            loginPanel.warningText.text = "Name cannot be empty!";
-            loginPanel.warningText.gameObject.SetActive(true);
-            return false;
-        }
-        return true;
     }
 
     public override void OnConnectedToMaster()
