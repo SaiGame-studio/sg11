@@ -9,15 +9,11 @@ public class UILoginPanel : SaiMonoBehaviour
 {
     public TMP_InputField inputUsername;
 
-    /// <summary>
-    /// Login button that triggers the login process
-    /// </summary>
     public Button loginBtn;
 
     protected override void Start()
     {
         base.Start();
-        loginBtn.onClick.AddListener(OnLoginButtonClicked);
     }
 
     protected virtual void FixedUpdate()
@@ -25,7 +21,7 @@ public class UILoginPanel : SaiMonoBehaviour
         this.CheckInputUsername();
     }
 
-    protected void OnLoginButtonClicked()
+    public virtual void LoginPhoton()
     {
         string username = inputUsername.text.Trim();
         if (username.Length > 0)
